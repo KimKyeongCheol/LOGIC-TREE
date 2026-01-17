@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const fileUploadContent = document.querySelector('.file-upload-content');
                 if (fileUploadContent && !fileUploadContent.classList.contains('hidden')) {
                     document.getElementById('loading').classList.remove('hidden');
+                    document.querySelector('.result-card').classList.add('hidden'); // Hide result card on gender change
                     document.querySelector('.result-message').innerHTML = '';
                     predict(selectedGender); // Pass selectedGender to predict
                 }
@@ -60,11 +61,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         const loadingSpinner = document.getElementById('loading');
                         const faceImage = document.getElementById('face-image');
                         const fileUploadContent = document.querySelector('.file-upload-content');
+                        const resultCard = document.querySelector('.result-card');
 
                         if (imageUploadWrap) imageUploadWrap.classList.add('hidden');
                         if (loadingSpinner) loadingSpinner.classList.remove('hidden');
                         if (faceImage) faceImage.src = e.target.result;
                         if (fileUploadContent) fileUploadContent.classList.remove('hidden');
+                        if (resultCard) resultCard.classList.add('hidden'); // Hide result card on new upload
                         console.log("Image loaded and preview displayed.");
 
                         // Simulate AI prediction
@@ -88,12 +91,15 @@ document.addEventListener("DOMContentLoaded", function() {
             const imageUploadWrap = document.querySelector('.image-upload-wrap');
             const faceImage = document.getElementById('face-image');
             const loadingSpinner = document.getElementById('loading');
+            const resultCard = document.querySelector('.result-card');
             const resultMessage = document.querySelector('.result-message');
+
 
             if (fileUploadContent) fileUploadContent.classList.add('hidden');
             if (imageUploadWrap) imageUploadWrap.classList.remove('hidden');
             if (faceImage) faceImage.src = '#'; // Clear image source
             if (loadingSpinner) loadingSpinner.classList.add('hidden');
+            if (resultCard) resultCard.classList.add('hidden'); // Hide result card on remove
             if (resultMessage) resultMessage.innerHTML = ''; // Clear result message
             console.log("Upload removed.");
         } catch (error) {
@@ -109,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 try {
                     document.getElementById('loading').classList.add('hidden');
+                    const resultCard = document.querySelector('.result-card');
                     let result = '';
 
                     // JoCoding's original toggle logic: unchecked is female, checked is male
@@ -123,6 +130,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.log("Prediction result displayed.");
                     } else {
                         console.error("Result message element not found!");
+                    }
+                    if (resultCard) {
+                        resultCard.classList.remove('hidden'); // Show result card when prediction is done
                     }
                 } catch (error) {
                     console.error("Error inside predict setTimeout:", error);
