@@ -1,14 +1,56 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새로운 동물상 테스트</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <div class="ad-top"></div>
+        <h1>동물상 테스트 <small>사이트 제작중에 있습니다.</small></h1>
+    </header>
+    <div class="container">
+        <aside class="ad-side-left"></aside>
+        <main>
+            <section class="selection-gender">
+                <h2>성별을 선택하세요</h2>
+                <div class="gender-options d-flex justify-content-center">
+                    <input type="checkbox" id="gender">
+                    <label for="gender">
+                        <span class="gender-text female-text">여자</span>
+                        <span class="knob">
+                            <i></i>
+                        </span>
+                        <span class="gender-text male-text">남자</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="upload-area">
+                <div class="image-upload-wrap">
+                    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                    <div class="drag-text">
+                        <h3>얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
+                    </div>
+                </div>
+                <div class="file-upload-content hidden">
+                    <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+                    <div id="loading" class="spinner-border hidden" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="result-message"></p>
+                    <button type="button" class="try-again-btn" onclick="removeUpload()">다른 사진으로 재시도</button>
+                </div>
+            </section>
+        </main>
+        <aside class="ad-side-right"></aside>
+    </div>
+    <footer>
+        <div class="ad-bottom"></div>
+        <p>&copy; 2026</p>
+    </footer>
+    <script src="main.js"></script>
 </body>
 </html>

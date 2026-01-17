@@ -1,1 +1,309 @@
-/* Add styles here */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+    background-color: #F8F9FA;
+    color: #212529;
+}
+
+header {
+    background-color: #FFFFFF;
+    color: #212529;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    max-width: 1200px; /* Limit container width */
+}
+
+main {
+    flex-grow: 1;
+    padding: 2rem;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin: 1rem;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: #212529;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ad-top, .ad-bottom {
+    background-color: #E9ECEF;
+    color: #212529;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.ad-bottom {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.ad-side-left, .ad-side-right {
+    background-color: #E9ECEF;
+    color: #212529;
+    padding: 1rem;
+    width: 180px; /* Slightly wider for side ads */
+    margin: 1rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+h1 small {
+    font-size: 1rem;
+    color: #6B9A6E;
+    margin-left: 10px;
+}
+
+.hidden {
+    display: none !important; /* Use !important to ensure hiding */
+}
+
+/* Animal Face Test Specific Styles */
+.selection-gender {
+    margin-bottom: 2rem;
+}
+
+.selection-gender h2 {
+    color: #212529;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.gender-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* gender toggle */
+#gender {
+	position: absolute;
+	left: -9999px;
+}
+
+label[for="gender"] {
+	position: relative;
+	display: block;
+	width: 100px;
+	height: 50px;
+	border-radius: 50px;
+	background: linear-gradient(to right, #da4167, #f78764); /* Female side default */
+	box-shadow: 
+		inset 0 2px 5px rgba(0, 0, 0, .2),
+		0 0 0 2px #fff;
+	cursor: pointer;
+	transition: background .5s;
+}
+
+#gender:checked + label[for="gender"] {
+	background: linear-gradient(to right, #084177, #687466); /* Male side checked */
+}
+
+label[for="gender"] .gender-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.5s ease;
+}
+
+label[for="gender"] .female-text {
+    left: 15px; /* Position for "여자" */
+    color: white; /* Color when female side is active */
+}
+
+label[for="gender"] .male-text {
+    right: 15px; /* Position for "남자" */
+    color: #f3f3f3; /* Default color when female side is active */
+}
+
+#gender:checked + label[for="gender"] .female-text {
+    color: #f3f3f3; /* Color when male side is active */
+}
+
+#gender:checked + label[for="gender"] .male-text {
+    color: white; /* Color when male side is active */
+}
+
+
+label[for="gender"] .knob {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+	transition: left .5s;
+}
+
+#gender:checked + label[for="gender"] .knob {
+	left: 55px;
+}
+
+label[for="gender"] .knob i {
+	position: absolute;
+	left: 50%;
+	width: 2px;
+	height: 10px;
+	margin-left: -1px;
+	background: #f4b6c3;
+	transition: 
+		transform .5s,
+		height .2s,
+		top .2s;
+}
+
+#gender:checked + label[for="gender"] .knob i:first-child {
+	height: 15px;
+	top: 15px;
+	transform: 
+		translateX(.5px)
+		rotate(-45deg)
+		scaleX(1.5);
+}
+
+label[for="gender"] .knob i:last-child {
+	top: 20px;
+	transform: rotate(45deg);
+}
+
+#gender:checked + label[for="gender"] .knob i:last-child {
+	height: 15px;
+	top: 10px;
+	transform: 
+		translateX(-.5px)
+		rotate(45deg)
+		scaleX(1.5);
+}
+
+
+.upload-area {
+    margin-bottom: 2rem;
+}
+
+.image-upload-wrap {
+    position: relative;
+    border: 2px dashed #E9ECEF;
+    border-radius: 8px;
+    padding: 40px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.image-upload-wrap:hover {
+    background-color: #F0F2F5;
+}
+
+.file-upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.drag-text h3 {
+    margin: 0;
+    color: #6B9A6E;
+    font-size: 1.2rem;
+}
+
+.file-upload-content {
+    margin-top: 20px;
+    border: 1px solid #E9ECEF;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.file-upload-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+#loading {
+    display: inline-block; /* For spinner to be visible */
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #6B9A6E; /* Spinner color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-message {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #212529;
+    margin-top: 20px;
+}
+
+.try-again-btn {
+    background-color: #6B9A6E;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.try-again-btn:hover {
+    background-color: #5a8a61;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .ad-side-left, .ad-side-right {
+        display: none !important;
+    }
+
+    main {
+        margin: 1rem 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .ad-top, .ad-bottom {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+}
