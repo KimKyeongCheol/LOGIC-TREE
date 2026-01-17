@@ -351,6 +351,8 @@ label[for="gender"] .knob i:last-child {
 .monkey .progress-bar { background-color: #C8C0A8; } /* Light Brown/Tan */
 .tiger .progress-bar { background-color: #E5A85A; } /* Orange-Gold */
 .horse .progress-bar { background-color: #A6A2C2; } /* Light Purple-Gray */
+.snake .progress-bar { background-color: #A0D9B1; } /* Pale Green */
+.squirrel .progress-bar { background-color: #DABCA5; } /* Light Brown */
 
 
 .try-again-btn {
