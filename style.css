@@ -239,6 +239,8 @@ label[for="gender"] .knob i:last-child {
     border: 1px solid #E9ECEF;
     border-radius: 8px;
     padding: 20px;
+    position: relative; /* Crucial for absolute positioning of #loading */
+    min-height: 200px; /* Ensure enough space for loading spinner */
 }
 
 .file-upload-image {
@@ -249,14 +251,18 @@ label[for="gender"] .knob i:last-child {
 }
 
 #loading {
-    display: inline-block; /* For spinner to be visible */
+    display: block; /* Changed from inline-block for better centering */
     width: 40px;
     height: 40px;
     border: 4px solid #f3f3f3;
     border-top: 4px solid #6B9A6E; /* Spinner color */
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: 20px auto;
+    position: absolute; /* Position absolutely within .file-upload-content */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering trick */
+    z-index: 10; /* Ensure it's on top */
 }
 
 @keyframes spin {

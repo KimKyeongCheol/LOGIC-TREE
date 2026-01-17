@@ -21,8 +21,11 @@ document.addEventListener("DOMContentLoaded", function() {
     hideEmptyAdContainers();
 
     const genderToggle = document.getElementById('gender');
+    let selectedGender = 'female'; // Default to female, will be updated by toggle or onload
+
     if (genderToggle) {
-        let selectedGender = genderToggle.checked ? 'male' : 'female'; // 'male' if checked, 'female' if unchecked (as per original JoCoding logic)
+        // Initialize selectedGender based on initial checked state of toggle
+        selectedGender = genderToggle.checked ? 'male' : 'female';
         console.log("Initial selected gender:", selectedGender);
 
         // Event listener for the gender toggle switch
@@ -35,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (fileUploadContent && !fileUploadContent.classList.contains('hidden')) {
                     document.getElementById('loading').classList.remove('hidden');
                     document.querySelector('.result-message').innerHTML = '';
-                    predict();
+                    predict(selectedGender); // Pass selectedGender to predict
                 }
             } catch (error) {
                 console.error("Error in genderToggle change event:", error);
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.log("Image loaded and preview displayed.");
 
                         // Simulate AI prediction
-                        predict();
+                        predict(selectedGender); // Pass selectedGender to predict
                     } catch (error) {
                         console.error("Error in FileReader.onload:", error);
                     }
@@ -99,9 +102,9 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     // Placeholder AI Prediction Function
-    function predict() {
+    function predict(currentGender) { // Accept currentGender as an argument
         try {
-            console.log("Predict function called.");
+            console.log("Predict function called with gender:", currentGender);
             // Simulate a delay for AI processing
             setTimeout(() => {
                 try {
@@ -109,9 +112,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     let result = '';
 
                     // JoCoding's original toggle logic: unchecked is female, checked is male
-                    if (selectedGender === 'female') {
+                    if (currentGender === 'female') {
                         result = '당신은 사랑스러운 고양이상입니다!';
-                    } else { // selectedGender === 'male'
+                    } else { // currentGender === 'male'
                         result = '당신은 듬직한 강아지상입니다!';
                     }
                     const resultMessage = document.querySelector('.result-message');
