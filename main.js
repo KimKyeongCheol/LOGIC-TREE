@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const langKoBtn = document.getElementById('lang-ko');
     const langEnBtn = document.getElementById('lang-en');
     const body = document.body;
-    const goHomeBtn = document.getElementById('go-to-start-btn'); // New
+
     const shareKakaoBtn = document.getElementById('share-kakaotalk');
     const shareTwitterBtn = document.getElementById('share-twitter');
     const shareFacebookBtn = document.getElementById('share-facebook');
