@@ -1,3 +1,5 @@
+// Force a new commit to trigger Cloudflare Pages deployment for cache clearing.
+
 document.addEventListener('DOMContentLoaded', () => {
     const startScreen = document.getElementById('start-screen');
     const testScreen = document.getElementById('test-screen');
