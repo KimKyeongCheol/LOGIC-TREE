@@ -353,10 +353,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculateResult() {
         const finalScores = Object.entries(scores);
+        if (finalScores.length === 0) {
+            // This scenario should ideally not happen if scores are always initialized.
+            // Fallback to a default result in case.
+            return langData[currentLang].results.LOGIC_MASTER; 
+        }
         finalScores.sort((a, b) => b[1] - a[1]);
-        const highestType = finalScores[0][0];
+        const highestType = finalScores[0][0]; // This is the key 'logic', 'emotion', etc.
 
-        return langData[currentLang].results[highestType];
+        // Ensure the highestType found actually exists in the results object
+        if (langData[currentLang].results.hasOwnProperty(highestType)) {
+            return langData[currentLang].results[highestType];
+        } else {
+            // Fallback if highestType is somehow invalid (e.g., scoring error leads to non-existent key)
+            // This could happen if a score key is 'typo'd or not in results object
+            return langData[currentLang].results.LOGIC_MASTER;
+        }
     }
 
     function showResult() {
