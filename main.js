@@ -8,9 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const questionText = document.getElementById('question-text');
     const answerButtons = document.getElementById('answer-buttons');
+    const progressIndicator = document.getElementById('progress-indicator'); // New: Get reference to progress indicator
     
     const resultTitle = document.getElementById('result-title');
     const resultDescription = document.getElementById('result-description');
+    const resultIcon = document.getElementById('result-icon'); // New: Get reference to icon element
 
     // 데이터 구조 정의
     const questions = [
@@ -54,20 +56,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const results = {
         LOGIC_MASTER: {
-            title: "논리주의 분석가 (Logic Master)",
-            description: "당신은 감정이나 혼돈에 휘둘리지 않고, 오직 데이터와 사실에 근거하여 판단하는 냉철한 분석가입니다. 모든 상황을 객관적으로 파악하고 가장 합리적인 해결책을 찾아내는 데 능숙합니다."
+            title: "논리주의 분석가 🧠",
+            description: "당신은 감정이나 불확실성에 휘둘리지 않고, 오직 데이터와 명확한 사실에 근거하여 판단하는 냉철한 마인드의 소유자입니다. 모든 상황을 객관적으로 파악하고 가장 효율적이며 합리적인 해결책을 찾아내는 데 탁월한 능력을 발휘합니다.",
+            icon: "🧠", // 뇌 이모지
+            className: "result-logic"
         },
         CHAOTIC_AGENT: {
-            title: "혼돈의 에이전트 (Chaotic Agent)",
-            description: "당신은 예측 불가능하며, 정해진 규칙이나 질서에 얽매이는 것을 싫어합니다. 당신의 행동은 즉흥적이며, 때로는 혼란을 야기하기도 하지만, 그 속에서 새로운 가능성을 발견하기도 하는 자유로운 영혼입니다."
+            title: "혼돈의 에이전트 🌪️",
+            description: "당신은 예측 불가능한 에너지와 창의력으로 가득 찬 마인드입니다. 정해진 규칙이나 틀에 얽매이는 것을 싫어하며, 즉흥적이고 자유로운 방식으로 새로운 가능성을 탐색합니다. 당신의 행동은 때로는 혼란을 야기하지만, 그 속에서 혁신적인 아이디어가 탄생하곤 합니다.",
+            icon: "🌪️", // 토네이도 이모지
+            className: "result-chaos"
         },
         ORDERLY_GUARDIAN: {
-            title: "질서의 수호자 (Orderly Guardian)",
-            description: "당신은 사회의 규칙과 질서를 중요하게 생각하며, 안정적인 상태를 유지하는 데서 평안을 느낍니다. 공동체의 이익을 위해 자신을 희생할 줄도 아는, 책임감 강한 수호자입니다."
+            title: "질서의 수호자 🛡️",
+            description: "당신은 안정과 조화를 최우선으로 생각하는 책임감 강한 마인드입니다. 사회의 규칙과 질서를 중요하게 여기며, 혼란스러운 상황에서도 평정심을 잃지 않고 체계적인 해결책을 모색합니다. 공동체의 안녕을 위해 헌신하며, 모든 것이 제자리에 있을 때 편안함을 느낍니다.",
+            icon: "🛡️", // 방패 이모지
+            className: "result-order"
         },
         EMPATHETIC_SOUL: {
-            title: "공감적 중재자 (Empathetic Soul)",
-            description: "당신은 타인의 감정을 깊이 이해하고 공감하는 능력이 뛰어납니다. 이성적인 판단보다는 사람 사이의 관계와 감정적인 조화를 중요하게 생각하며, 갈등을 중재하고 사람들을 하나로 모으는 역할을 합니다."
+            title: "공감적 중재자 ❤️",
+            description: "당신은 타인의 감정을 깊이 이해하고 공감하는 능력이 뛰어난 따뜻한 마인드입니다. 이성적인 판단보다는 사람 사이의 관계와 감정적인 조화를 중요하게 생각하며, 갈등을 중재하고 모두가 행복할 수 있는 길을 모색합니다. 당신의 존재 자체가 주변 사람들에게 위안과 힘이 됩니다.",
+            icon: "❤️", // 하트 이모지
+            className: "result-emotion"
         }
     };
 
@@ -79,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
         startScreen.classList.add('hidden');
         resultScreen.classList.add('hidden');
+        // Clear previous result classes
+        resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion'); // New: Clear old classes
         testScreen.classList.remove('hidden');
         showQuestion();
     }
@@ -86,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showQuestion() {
         const question = questions[currentQuestionIndex];
         questionText.innerText = question.text;
+        progressIndicator.innerText = `질문 ${currentQuestionIndex + 1} / ${questions.length}`; // New: Update progress indicator
         
         answerButtons.innerHTML = ''; // 이전 버튼들 삭제
         question.choices.forEach(choice => {
@@ -109,7 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentQuestionIndex < questions.length) {
             showQuestion();
-        } else {
+        }
+
+        else {
             showResult();
         }
     }
@@ -133,6 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const finalResult = calculateResult();
         resultTitle.innerText = finalResult.title;
         resultDescription.innerText = finalResult.description;
+        resultIcon.innerText = finalResult.icon; // New: Set icon text
+        resultScreen.classList.add(finalResult.className); // New: Add specific class to result screen
 
         testScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
@@ -141,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function restartTest() {
       resultScreen.classList.add('hidden');
       startScreen.classList.remove('hidden');
+      // Clear previous result classes when restarting
+      resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion'); // New: Clear old classes
     }
 
     startBtn.addEventListener('click', startTest);
