@@ -268,14 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('logicTreeLang', lang);
-        // Only regenerate questions if not currently in a test, to avoid changing questions mid-test
-        if (startScreen.classList.contains('hidden') && testScreen.classList.contains('hidden') && resultScreen.classList.contains('hidden')) {
-            generateRandomQuestions(); // Regenerate only if no screen is visible, implying a fresh start
-        } else if (startScreen.classList.contains('hidden') && !testScreen.classList.contains('hidden')) {
-            // If in test, just update UI texts without changing questions
-            // The showQuestion call inside updateUI handles re-rendering buttons
-        } else {
-             generateRandomQuestions(); // Always regenerate if starting a test or on result screen
+        // Regenerate questions only if the test is NOT active (i.e., on start or result screen)
+        if (testScreen.classList.contains('hidden')) { 
+            generateRandomQuestions();
         }
         updateUI(lang);
     }
@@ -388,6 +383,17 @@ document.addEventListener('DOMContentLoaded', () => {
     langKoBtn.addEventListener('click', () => switchLanguage('ko'));
     langEnBtn.addEventListener('click', () => switchLanguage('en'));
 
-    // Load user preferences on initial load
+    // --- Ad Hiding Functionality ---
+    function hideEmptyAdContainers() {
+        const adContainers = document.querySelectorAll('.ad-top, .ad-bottom, .ad-side-left, .ad-side-right');
+        adContainers.forEach(container => {
+            if (container.innerHTML.trim() === '') {
+                container.classList.add('hidden');
+            }
+        });
+    }
+
+    // Load user preferences and hide empty ads on initial load
     loadPreferences();
+    hideEmptyAdContainers(); // Call ad hiding function
 });
