@@ -67,17 +67,47 @@ header {
     position: relative; /* Keep relative for absolute controls */
 }
 
+/* Header Controls Styling */
 .header-controls {
-    position: absolute; /* Revert to absolute positioning for desktop */
+    position: absolute;
     top: 1rem;
     right: 1rem;
-    display: flex;
-    gap: 8px;
+    display: flex; /* Use flexbox for horizontal arrangement */
+    gap: 8px; /* Space between control groups */
     align-items: center;
 }
 
-#language-switcher {
+/* General styling for control groups */
+#navigation-controls,
+#language-switcher,
+#theme-switcher {
     display: flex;
+    border-radius: 6px;
+    overflow: hidden; /* For rounded corners on contained buttons */
+    border: 1px solid var(--ad-border);
+}
+
+/* Styling for the new Home button */
+#go-to-start-btn {
+    background-color: var(--ad-bg);
+    color: var(--ad-text-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: none;
+    border-radius: 6px; /* Apply border-radius directly for single button */
+}
+
+#go-to-start-btn:hover {
+    background-color: var(--ad-border);
+    color: var(--text-color);
+}
+
+/* Existing language switcher styles */
+#language-switcher { /* Keep original language-switcher display flex to align lang-btns */
+    display: flex; 
     border-radius: 6px;
     overflow: hidden;
     border: 1px solid var(--ad-border);
@@ -94,6 +124,16 @@ header {
     border: none;
     position: relative;
     z-index: 1;
+    border-radius: 0; /* Reset border-radius here as it's on the parent now */
+}
+
+.lang-btn:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.lang-btn:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .lang-btn:not(.active):hover {
@@ -108,6 +148,7 @@ header {
     box-shadow: inset 0 0 0 1px var(--primary-color);
 }
 
+/* Existing theme switcher styles */
 #theme-switcher {
     border-radius: 6px;
     background-color: var(--ad-bg);
