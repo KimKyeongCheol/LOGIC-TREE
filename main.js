@@ -446,62 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(facebookUrl, '_blank', 'width=600,height=400');
     }
 
-    // Function to draw the score chart
-    function drawScoreChart(rawScores) {
-        const scoreChartDiv = document.getElementById('score-chart');
-        scoreChartDiv.innerHTML = ''; // Clear previous chart
-        
-        // Define labels and colors for each score type
-        const scoreTypeInfo = { // Changed to object for easier lookup by key
-            logic: { label: langData[currentLang].results.LOGIC_MASTER.title.split(' ')[0], color: '#3F51B5' },
-            emotion: { label: langData[currentLang].results.EMPATHETIC_SOUL.title.split(' ')[0], color: '#E91E63' },
-            order: { label: langData[currentLang].results.ORDERLY_GUARDIAN.title.split(' ')[0], color: '#4CAF50' },
-            chaos: { label: langData[currentLang].results.CHAOTIC_AGENT.title.split(' ')[0], color: '#FF9800' }
-        };
 
-        const allScores = Object.values(rawScores);
-        const maxScore = Math.max(...allScores, 1);
-
-        // Convert rawScores to an array of [key, value] pairs, then sort by value in descending order
-        const sortedScores = Object.entries(rawScores).sort((a, b) => b[1] - a[1]);
-
-        // Create a wrapper for the bars to apply flexbox
-        const barsWrapper = document.createElement('div');
-        barsWrapper.classList.add('score-bars-wrapper');
-        scoreChartDiv.appendChild(barsWrapper);
-
-        sortedScores.forEach(([key, scoreValue]) => { // Iterate through sorted scores
-            const type = scoreTypeInfo[key]; // Get type info
-            if (!type) return; // Skip if type info not found
-
-            const percentage = (scoreValue / maxScore) * 100;
-
-            const barContainer = document.createElement('div');
-            barContainer.classList.add('score-bar-container');
-
-            const label = document.createElement('div');
-            label.classList.add('score-bar-label');
-            label.innerText = type.label;
-            barContainer.appendChild(label);
-
-            const barWrapper = document.createElement('div');
-            barWrapper.classList.add('score-bar-wrapper');
-
-            const barFill = document.createElement('div');
-            barFill.classList.add('score-bar-fill');
-            barFill.style.width = `${percentage}%`;
-            barFill.style.backgroundColor = type.color;
-            barWrapper.appendChild(barFill);
-
-            const valueDisplay = document.createElement('div');
-            valueDisplay.classList.add('score-value');
-            valueDisplay.innerText = scoreValue;
-            barWrapper.appendChild(valueDisplay);
-
-            barContainer.appendChild(barWrapper);
-            barsWrapper.appendChild(barContainer);
-        });
-    }
 
     function showResult() {
         const fullResult = calculateResult();
