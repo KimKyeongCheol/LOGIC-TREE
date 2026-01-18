@@ -295,11 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateResult() {
+        console.log("--- Calculating Result ---");
+        console.log("Current scores:", scores); // Log initial scores object
+
         const finalScores = Object.entries(scores);
+        console.log("finalScores before sort:", finalScores); // Log array before sort
+
         // Check if all scores are zero, indicating no questions were answered or loaded successfully
         const allScoresZero = finalScores.every(([key, value]) => value === 0);
 
         if (allScoresZero) {
+            console.log("All scores are zero. Returning generic message.");
             return {
                 title: langData[currentLang].results.LOGIC_MASTER.title, // Use title from an existing result for consistency
                 description: currentLang === 'ko' ? "질문이 로드되지 않았거나 답변이 선택되지 않아 결과를 도출할 수 없습니다." : "Could not determine result as questions were not loaded or no answers were selected.",
@@ -308,15 +314,20 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
 
-        finalScores.sort((a, b) => b[1] - a[1]);
+        finalScores.sort((a, b) => b[1] - a[1]); // Sorts descending by score value
+        console.log("finalScores after sort:", finalScores); // Log array after sort
+
         const highestType = finalScores[0][0];
+        console.log("Highest type determined:", highestType); // Log the determined highest type
 
         if (langData[currentLang].results.hasOwnProperty(highestType)) {
             return langData[currentLang].results[highestType];
         } else {
             // Fallback if highestType somehow doesn't match known results (shouldn't happen with current logic)
+            console.warn("Highest type ('", highestType, "') not found in results data. Falling back to LOGIC_MASTER.");
             return langData[currentLang].results.LOGIC_MASTER; 
         }
+        console.log("--- End Calculating Result ---"); // Add end log
     }
 
     function showResult() {
