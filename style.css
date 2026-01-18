@@ -59,66 +59,29 @@ body {
 
 header {
     background-color: var(--header-bg);
-    padding: 1rem 2rem;
+    padding: 1rem 0; /* Adjust padding for inner content */
     text-align: center;
     width: 100%;
     box-shadow: 0 4px 10px var(--box-shadow-light);
     margin-bottom: 1rem;
-    position: relative; /* For positioning controls */
+    position: relative; /* Keep relative for ad-top */
+}
+
+.header-main-content { /* New wrapper style */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Match container max-width */
+    margin: 0 auto; /* Center it */
+    padding: 0 1rem; /* Add horizontal padding to the content */
 }
 
 .header-controls {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    position: static; /* Remove absolute positioning */
     display: flex;
     gap: 10px;
     align-items: center;
 }
-
-#language-switcher, #theme-switcher {
-    display: flex;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: var(--ad-bg);
-}
-
-.lang-btn, .theme-btn {
-    background-color: var(--ad-bg);
-    color: var(--ad-text-color);
-    border: 1px solid var(--ad-border);
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-    white-space: nowrap; /* Prevent text wrapping */
-}
-
-.lang-btn:hover, .theme-btn:hover {
-    background-color: var(--ad-border);
-    color: var(--text-color);
-}
-
-.lang-btn.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.lang-btn:not(:last-child) {
-    border-right: none;
-}
-.theme-btn {
-    padding: 8px 10px;
-    font-size: 1.2rem;
-    line-height: 1;
-    border: none;
-    border-radius: 5px;
-}
-#theme-switcher {
-    background-color: transparent;
-}
-
 
 h1 {
     margin: 0;
@@ -330,16 +293,18 @@ footer {
     }
     h1 {
         font-size: 1.8rem;
-        margin-top: 1rem;
+        margin-top: 0; /* No top margin when stacked */
+        text-align: center; /* Center h1 on mobile */
+        width: 100%; /* Take full width when stacked */
+    }
+    .header-main-content {
+        flex-direction: column; /* Stack h1 and controls vertically */
+        padding: 0.5rem 1rem; /* Adjust padding for mobile header content */
     }
     .header-controls {
-        position: static;
-        flex-direction: row;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 0.5rem;
-        top: auto;
-        right: auto;
+        width: 100%; /* Take full width */
+        justify-content: center; /* Center buttons */
+        margin-top: 0.5rem; /* Space between h1 and controls */
     }
     #language-switcher, #theme-switcher {
         flex-direction: row;

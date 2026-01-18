@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startBtn = document.getElementById('start-btn');
     const retryBtn = document.getElementById('retry-btn');
-    const mainH1 = document.querySelector('h1'); // Reference to the main h1 tag
+    const mainH1 = document.querySelector('h1');
 
     const questionText = document.getElementById('question-text');
     const answerButtons = document.getElementById('answer-buttons');
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultDescription = document.getElementById('result-description');
     const resultIcon = document.getElementById('result-icon');
 
-    // Theme and Language Switchers
     const themeToggleBtn = document.getElementById('theme-toggle');
     const langKoBtn = document.getElementById('lang-ko');
     const langEnBtn = document.getElementById('lang-en');
@@ -23,7 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuestionIndex = 0;
     let scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
-    let currentLang = 'ko'; // Default language
+    let currentLang = 'ko';
+    let currentTestQuestions = [];
+
+    const NUM_QUESTIONS_PER_TEST = 5; // Number of questions to show per test run
 
     // --- Language Data ---
     const langData = {
@@ -102,6 +104,105 @@ document.addEventListener('DOMContentLoaded', () => {
                         { text: "일단 공부를 계속하며, 메시지로 간간이 답장해준다.", scores: { logic: 2 } },
                         { text: "모르겠다. 일단 같이 술이나 한잔하자고 한다.", scores: { chaos: 2 } }
                     ]
+                },
+                {
+                    text: "새로운 취미를 시작하려고 한다...",
+                    choices: [
+                        { text: "여러 취미를 탐색하며 즉흥적으로 끌리는 것에 도전한다.", scores: { chaos: 1 } },
+                        { text: "흥미와 비용, 시간 효율 등을 따져 가장 합리적인 취미를 선택한다.", scores: { logic: 1 } },
+                        { text: "이미 많은 사람들이 즐기며 체계가 잘 잡힌 취미를 선택한다.", scores: { order: 1 } },
+                        { text: "주변 친구들이나 지인들이 추천하는 취미를 함께 시작한다.", scores: { emotion: 1 } }
+                    ]
+                },
+                {
+                    text: "어려운 문제에 부딪혔을 때...",
+                    choices: [
+                        { text: "문제의 원인을 철저히 분석하고 해결책을 논리적으로 찾아낸다.", scores: { logic: 2 } },
+                        { text: "직관에 따라 여러 방법을 시도해보고 되는대로 밀고 나간다.", scores: { chaos: 2 } },
+                        { text: "정해진 절차나 매뉴얼에 따라 차근차근 해결한다.", scores: { order: 2 } },
+                        { text: "주변 사람들과 상의하며 도움을 요청한다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "친구가 힘들어할 때...",
+                    choices: [
+                        { text: "친구의 감정에 공감하며 위로해준다.", scores: { emotion: 2 } },
+                        { text: "친구의 문제 상황을 객관적으로 듣고 해결책을 제시한다.", scores: { logic: 2 } },
+                        { text: "친구에게 힘내라고 격려하며 함께 시간을 보낸다.", scores: { order: 1, emotion: 1 } },
+                        { text: "술이나 한잔하자고 하며 분위기를 전환하려 한다.", scores: { chaos: 2 } }
+                    ]
+                },
+                {
+                    text: "예상치 못한 상황으로 계획이 틀어졌다...",
+                    choices: [
+                        { text: "침착하게 상황을 분석하고 새로운 계획을 세운다.", scores: { logic: 2 } },
+                        { text: "뜻밖의 즐거움이 있을지도? 하며 변화를 받아들인다.", scores: { chaos: 2 } },
+                        { text: "흐트러진 계획을 수습하고 원래의 목표를 향해 나아간다.", scores: { order: 2 } },
+                        { text: "실망하지만, 이내 주변 사람들과 함께 극복하려 한다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "새로운 사람을 만났을 때...",
+                    choices: [
+                        { text: "상대방의 표정과 말투에서 감정 상태를 먼저 파악한다.", scores: { emotion: 1 } },
+                        { text: "상대방의 배경이나 정보 등을 먼저 파악하여 관계의 틀을 세운다.", scores: { logic: 1 } },
+                        { text: "대화의 흐름에 몸을 맡기고 편안하게 교류한다.", scores: { chaos: 1 } },
+                        { text: "예의와 격식을 갖춰 조심스럽게 관계를 시작한다.", scores: { order: 1 } }
+                    ]
+                },
+                {
+                    text: "휴가를 계획한다면...",
+                    choices: [
+                        { text: "모든 동선과 예산을 철저히 계획하여 효율적인 휴가를 만든다.", scores: { logic: 2 } },
+                        { text: "가보고 싶은 곳 몇 군데만 정하고, 나머지는 즉흥적으로 결정한다.", scores: { chaos: 2 } },
+                        { text: "유명 관광지나 검증된 코스를 따라 안전하게 휴가를 보낸다.", scores: { order: 2 } },
+                        { text: "함께 가는 사람들의 의견을 최대한 수렴하여 모두가 만족하는 휴가를 만든다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "오랜 시간 공들인 프로젝트가 실패로 돌아갔다...",
+                    choices: [
+                        { text: "실패의 원인을 분석하고 다음 프로젝트에 반영한다.", scores: { logic: 2 } },
+                        { text: "이럴 수도 있지' 하며 훌훌 털고 다른 새로운 도전을 찾는다.", scores: { chaos: 2 } },
+                        { text: "좌절하지만, 곧 다시 계획을 세워 재도전을 준비한다.", scores: { order: 2 } },
+                        { text: "함께 고생한 팀원들의 사기를 먼저 살핀다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "어떤 물건을 살 때...",
+                    choices: [
+                        { text: "가성비, 기능, 내구성을 꼼꼼히 따져보고 구매한다.", scores: { logic: 2 } },
+                        { text: "그때그때 마음에 드는 것을 바로 구매한다.", scores: { chaos: 2 } },
+                        { text: "유명 브랜드나 검증된 제품을 선호한다.", scores: { order: 2 } },
+                        { text: "주변 사람들이 좋다고 하는 것을 구매한다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "주말에 갑자기 계획이 비었다...",
+                    choices: [
+                        { text: "평소 미뤄뒀던 자기계발이나 공부를 한다.", scores: { logic: 2 } },
+                        { text: "즉흥적으로 친구들을 만나거나 새로운 곳으로 떠난다.", scores: { chaos: 2 } },
+                        { text: "집안일을 하거나 정해진 루틴대로 시간을 보낸다.", scores: { order: 2 } },
+                        { text: "가족이나 연인과 함께 시간을 보내려 한다.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "팀원 중 한 명이 실수를 반복한다...",
+                    choices: [
+                        { text: "문제의 원인을 파악하고 해결을 위한 구체적인 피드백을 준다.", scores: { logic: 2 } },
+                        { text: "솔직하게 실망감을 표현하며, 변화를 요구한다.", scores: { emotion: 2 } },
+                        { text: "팀의 규칙과 절차를 다시 강조하며 준수를 요구한다.", scores: { order: 2 } },
+                        { text: "실수를 덮어주고, 나중에 만회할 기회를 준다.", scores: { chaos: 2 } }
+                    ]
+                },
+                {
+                    text: "오랫동안 연락 없던 친구에게서 갑자기 연락이 왔다...",
+                    choices: [
+                        { text: "연락 온 목적이 무엇인지 먼저 파악한다.", scores: { logic: 2 } },
+                        { text: "반가운 마음에 바로 만나자고 제안한다.", scores: { emotion: 2 } },
+                        { text: "혹시 무슨 일이 있는 건 아닐지 걱정하며 조심스럽게 대한다.", scores: { order: 2 } },
+                        { text: "무슨 말을 할지 기대하며 일단 만난다.", scores: { chaos: 2 } }
+                    ]
                 }
             ]
         },
@@ -146,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             questions: [
                 {
-                    text: "IF you found a valuable-looking wallet on the street...",
+                    text: "You found a valuable-looking wallet on the street...",
                     choices: [
                         { text: "Immediately take it to the nearest police station.", scores: { order: 1 } },
                         { text: "Open the wallet to find ID and return it to the owner.", scores: { chaos: 1, emotion: 1 } },
@@ -155,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ]
                 },
                 {
-                    text: "IF no one wants to take on a difficult role in a team project...",
+                    text: "In a team project, no one wants to take on a difficult role...",
                     choices: [
                         { text: "I volunteer for the tough role for the sake of everyone.", scores: { emotion: 1, order: 1 } },
                         { text: "I suggest a rational and fair method to distribute roles.", scores: { logic: 2 } },
@@ -164,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ]
                 },
                 {
-                    text: "IF it was certain that tomorrow is the last day of the world...",
+                    text: "It's certain that tomorrow is the last day of the world...",
                     choices: [
                         { text: "Spend the last moments with loved ones.", scores: { emotion: 2 } },
                         { text: "Help people maintain order amidst chaos.", scores: { order: 2 } },
@@ -173,17 +274,124 @@ document.addEventListener('DOMContentLoaded', () => {
                     ]
                 },
                 {
-                    text: "IF the day before a very important exam, a friend urgently asks for advice...",
+                    text: "The day before a very important exam, a friend urgently asks for advice...",
                     choices: [
                         { text: "The exam is important, but I can't ignore a friend, so I listen.", scores: { emotion: 2 } },
                         { text: "I explain the situation to my friend and promise to meet right after the exam.", scores: { logic: 1, order: 1 } },
                         { text: "I continue studying, replying to messages occasionally.", scores: { logic: 2 } },
                         { text: "I don't know. I just suggest having a drink together.", scores: { chaos: 2 } }
                     ]
+                },
+                {
+                    text: "You're about to start a new hobby...",
+                    choices: [
+                        { text: "Explore various hobbies and spontaneously try what appeals.", scores: { chaos: 1 } },
+                        { text: "Consider interest, cost, and time efficiency to choose the most rational hobby.", scores: { logic: 1 } },
+                        { text: "Choose a well-established hobby that many people already enjoy.", scores: { order: 1 } },
+                        { text: "Start a hobby together with friends or acquaintances who recommend it.", scores: { emotion: 1 } }
+                    ]
+                },
+                {
+                    text: "When faced with a difficult problem...",
+                    choices: [
+                        { text: "Thoroughly analyze the root cause and logically find a solution.", scores: { logic: 2 } },
+                        { text: "Try various methods intuitively and push forward as it goes.", scores: { chaos: 2 } },
+                        { text: "Solve it step-by-step according to established procedures or manuals.", scores: { order: 2 } },
+                        { text: "Consult with people around you and ask for help.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "When a friend is having a hard time...",
+                    choices: [
+                        { text: "Empathize with their feelings and comfort them.", scores: { emotion: 2 } },
+                        { text: "Listen objectively to their problem and offer solutions.", scores: { logic: 2 } },
+                        { text: "Encourage them and spend time together.", scores: { order: 1, emotion: 1 } },
+                        { text: "Suggest having a drink to change the mood.", scores: { chaos: 2 } }
+                    ]
+                },
+                {
+                    text: "Unexpected circumstances disrupt your plans...",
+                    choices: [
+                        { text: "Calmly analyze the situation and make new plans.", scores: { logic: 2 } },
+                        { text: "Think 'there might be unexpected fun!' and embrace the change.", scores: { chaos: 2 } },
+                        { text: "Rectify the disrupted plans and proceed towards the original goal.", scores: { order: 2 } },
+                        { text: "Disappointed, but soon overcome it with friends.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "When meeting new people...",
+                    choices: [
+                        { text: "First, gauge their emotional state from their expression and tone.", scores: { emotion: 1 } },
+                        { text: "First, understand their background or information to set a framework for the relationship.", scores: { logic: 1 } },
+                        { text: "Let the conversation flow naturally and interact comfortably.", scores: { chaos: 1 } },
+                        { text: "Start the relationship carefully with courtesy and formality.", scores: { order: 1 } }
+                    ]
+                },
+                {
+                    text: "If you were to imagine the future...",
+                    choices: [
+                        { text: "Set clear goals and establish a step-by-step plan.", scores: { order: 2 } },
+                        { text: "Think 'it'll work out somehow!' and enjoy going with the flow.", scores: { chaos: 2 } },
+                        { text: "Keep various possibilities open and prepare to adapt flexibly.", scores: { logic: 2 } },
+                        { text: "Dream of a happy and stable future together with loved ones.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "A long-term project fails...",
+                    choices: [
+                        { text: "Analyze the cause of failure and apply it to the next project.", scores: { logic: 2 } },
+                        { text: "Brush it off, thinking 'these things happen,' and look for new challenges.", scores: { chaos: 2 } },
+                        { text: "Frustrated, but soon prepare for a re-challenge by planning again.", scores: { order: 2 } },
+                        { text: "First, check the morale of the team members who worked hard together.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "When buying an item...",
+                    choices: [
+                        { text: "Carefully consider cost-effectiveness, function, and durability before purchase.", scores: { logic: 2 } },
+                        { text: "Buy whatever catches my eye at the moment.", scores: { chaos: 2 } },
+                        { text: "Prefer well-known brands or verified products.", scores: { order: 2 } },
+                        { text: "Buy what people around me recommend.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "Your weekend suddenly became free...",
+                    choices: [
+                        { text: "Catch up on self-development or studies I've been putting off.", scores: { logic: 2 } },
+                        { text: "Spontaneously meet friends or go somewhere new.", scores: { chaos: 2 } },
+                        { text: "Do housework or spend time following a fixed routine.", scores: { order: 2 } },
+                        { text: "Spend time with family or a loved one.", scores: { emotion: 2 } }
+                    ]
+                },
+                {
+                    text: "One team member repeatedly makes mistakes...",
+                    choices: [
+                        { text: "Identify the cause of the problem and give specific feedback for a solution.", scores: { logic: 2 } },
+                        { text: "Honestly express disappointment and demand change.", scores: { emotion: 2 } },
+                        { text: "Re-emphasize team rules and procedures, demanding compliance.", scores: { order: 2 } },
+                        { text: "Cover up the mistake and give them a chance to make up for it later.", scores: { chaos: 2 } }
+                    ]
+                },
+                {
+                    text: "A friend you haven't heard from in a long time suddenly contacts you...",
+                    choices: [
+                        { text: "First, ascertain the purpose of their contact.", scores: { logic: 2 } },
+                        { text: "Happily suggest meeting immediately.", scores: { emotion: 2 } },
+                        { text: "Treat them carefully, worrying if something is wrong.", scores: { order: 2 } },
+                        { text: "Meet them, anticipating what they might say.", scores: { chaos: 2 } }
+                    ]
                 }
             ]
         }
     };
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     function updateUI(lang) {
         const data = langData[lang];
@@ -199,29 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resultScreen.querySelector('h2')) resultScreen.querySelector('h2').innerText = data.resultScreen.h2;
         retryBtn.innerText = data.retryButton;
 
-        // Update current question text if on test screen
-        if (!testScreen.classList.contains('hidden') && questions[currentQuestionIndex]) {
-            questionText.innerText = data.questions[currentQuestionIndex].text;
-            progressIndicator.innerText = `${data.questionPrefix} ${currentQuestionIndex + 1} ${data.of} ${data.questions.length}`;
-            // Re-render answer buttons for current language
-            answerButtons.innerHTML = '';
-            data.questions[currentQuestionIndex].choices.forEach(choice => {
-                const button = document.createElement('button');
-                button.innerText = choice.text;
-                button.classList.add('answer-btn');
-                // Pass original score object, not localized text
-                const originalChoice = langData['ko'].questions[currentQuestionIndex].choices.find(c => c.text === langData[currentLang].questions[currentQuestionIndex].choices.find(lc => lc.text === choice.text).text);
-                button.addEventListener('click', () => selectAnswer(originalChoice));
-                answerButtons.appendChild(button);
-            });
-        }
-        // If result screen is visible, update result texts
-        if (!resultScreen.classList.contains('hidden')) {
-            const finalResult = calculateResult(); // Recalculate based on original scores
+        // Update current question text if on test screen or if we are about to start
+        if (!testScreen.classList.contains('hidden')) { // Fixed: Only update if test screen is visible
+            showQuestion(); // This will re-render the question and progress for currentTestQuestions
+        } else if (!resultScreen.classList.contains('hidden')) {
+             // If result screen is visible, update result texts
+            const finalResult = calculateResult(); // Recalculate based on current scores but use localized data
             resultTitle.innerText = finalResult.title;
             resultDescription.innerText = finalResult.description;
             resultIcon.innerText = finalResult.icon;
+        } else if (!startScreen.classList.contains('hidden')) {
+            // If start screen is visible, update result texts for start screen (already updated above)
         }
+        // If result screen is visible, update result texts
+        // This was a duplicate call from above, removed
 
         // Update active language button
         langKoBtn.classList.remove('active');
@@ -236,6 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('logicTreeLang', lang);
+        // Do NOT regenerate currentTestQuestions here if test is active
+        if (testScreen.classList.contains('hidden')) { // Only regenerate if test is not active
+            generateRandomQuestions();
+        }
         updateUI(lang);
     }
 
@@ -247,18 +450,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadPreferences() {
-        // Load Language Preference
         const savedLang = localStorage.getItem('logicTreeLang');
         if (savedLang) {
             currentLang = savedLang;
         } else {
-            // Auto-detect browser language if no preference saved
-            const browserLang = navigator.language.split('-')[0]; // e.g., 'en' from 'en-US'
+            const browserLang = navigator.language.split('-')[0];
             currentLang = (browserLang === 'ko' || browserLang === 'en') ? browserLang : 'ko';
         }
-        updateUI(currentLang);
-
-        // Load Theme Preference
+        
         const savedTheme = localStorage.getItem('logicTreeTheme');
         if (savedTheme === 'dark') {
             body.classList.add('dark-mode');
@@ -267,11 +466,20 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.remove('dark-mode');
             themeToggleBtn.innerText = '☀️';
         }
+        generateRandomQuestions(); // Generate initial questions based on loaded lang
+        updateUI(currentLang);
+    }
+
+    function generateRandomQuestions() {
+        const fullQuestionPool = langData[currentLang].questions;
+        const shuffledPool = shuffleArray([...fullQuestionPool]);
+        currentTestQuestions = shuffledPool.slice(0, NUM_QUESTIONS_PER_TEST);
     }
 
     function startTest() {
         currentQuestionIndex = 0;
         scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
+        generateRandomQuestions();
         startScreen.classList.add('hidden');
         resultScreen.classList.add('hidden');
         resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion');
@@ -280,19 +488,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showQuestion() {
-        const questionData = langData[currentLang].questions[currentQuestionIndex]; // Use localized question
+        const questionData = currentTestQuestions[currentQuestionIndex];
         questionText.innerText = questionData.text;
-        progressIndicator.innerText = `${langData[currentLang].questionPrefix} ${currentQuestionIndex + 1} ${langData[currentLang].of} ${langData[currentLang].questions.length}`;
+        progressIndicator.innerText = `${langData[currentLang].questionPrefix} ${currentQuestionIndex + 1} ${langData[currentLang].of} ${currentTestQuestions.length}`;
         
         answerButtons.innerHTML = '';
         questionData.choices.forEach((choice, index) => {
             const button = document.createElement('button');
             button.innerText = choice.text;
             button.classList.add('answer-btn');
-            // Pass the original score object from the base language (ko) to selectAnswer
-            // This ensures scores are consistently applied regardless of displayed language
-            const originalChoice = langData['ko'].questions[currentQuestionIndex].choices[index];
-            button.addEventListener('click', () => selectAnswer(originalChoice));
+            button.addEventListener('click', () => selectAnswer(choice));
             answerButtons.appendChild(button);
         });
     }
@@ -306,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentQuestionIndex++;
 
-        if (currentQuestionIndex < langData[currentLang].questions.length) {
+        if (currentQuestionIndex < currentTestQuestions.length) {
             showQuestion();
         } else {
             showResult();
@@ -318,7 +523,6 @@ document.addEventListener('DOMContentLoaded', () => {
         finalScores.sort((a, b) => b[1] - a[1]);
         const highestType = finalScores[0][0];
 
-        // Return localized result data
         return langData[currentLang].results[highestType];
     }
 
