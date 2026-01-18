@@ -365,12 +365,33 @@ document.addEventListener('DOMContentLoaded', () => {
       resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion');
     }
 
+    const goHomeBtn = document.getElementById('go-to-start-btn'); // New
+
+    // ...
+
+    function goToStartScreen() {
+        testScreen.classList.add('hidden');
+        resultScreen.classList.add('hidden');
+        startScreen.classList.remove('hidden');
+
+        // Reset test state
+        currentQuestionIndex = 0;
+        scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
+        // Clear all result classes including the generic one
+        resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion', 'result-default'); 
+
+        // Ensure start screen UI is updated and new questions are ready
+        generateRandomQuestions(); // Prepare fresh questions for the start screen
+        updateUI(currentLang); // Update UI to reflect start screen content
+    }
+
     // --- Event Listeners ---
     startBtn.addEventListener('click', startTest);
     retryBtn.addEventListener('click', restartTest);
     themeToggleBtn.addEventListener('click', toggleTheme);
     langKoBtn.addEventListener('click', () => switchLanguage('ko'));
     langEnBtn.addEventListener('click', () => switchLanguage('en'));
+    goHomeBtn.addEventListener('click', goToStartScreen); // New
 
     // --- Ad Hiding Functionality ---
     function hideEmptyAdContainers() {
