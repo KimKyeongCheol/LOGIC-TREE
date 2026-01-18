@@ -231,19 +231,29 @@ document.addEventListener('DOMContentLoaded', () => {
         retryBtn.innerText = data.retryButton;
 
         // Update current question text if on test screen
-        if (!testScreen.classList.contains('hidden')) { // Fixed: Only update if test screen is visible
-            showQuestion(); // This will re-render the question and progress for currentTestQuestions
-        } else if (!resultScreen.classList.contains('hidden')) {
-             // If result screen is visible, update result texts
-            const finalResult = calculateResult(); // Recalculate based on current scores but use localized data
+        if (!testScreen.classList.contains('hidden')) { // If test screen is visible
+            // Re-render current question with new language
+            const questionData = currentTestQuestions[currentQuestionIndex];
+            if (questionData) { // Check if questionData is valid before accessing
+                questionText.innerText = questionData.text; // Update question text
+                progressIndicator.innerText = `${data.questionPrefix} ${currentQuestionIndex + 1} ${data.of} ${currentTestQuestions.length}`;
+                
+                // Re-render answer buttons for current question in new language
+                answerButtons.innerHTML = '';
+                questionData.choices.forEach((choice) => { // Iterate through currentTestQuestions choices
+                    const button = document.createElement('button');
+                    button.innerText = choice.text; // Use localized choice text
+                    button.classList.add('answer-btn');
+                    button.addEventListener('click', () => selectAnswer(choice)); // Pass 'choice' directly
+                    answerButtons.appendChild(button);
+                });
+            }
+        } else if (!resultScreen.classList.contains('hidden')) { // If result screen is visible
+            const finalResult = calculateResult(); // This gets localized result data
             resultTitle.innerText = finalResult.title;
             resultDescription.innerText = finalResult.description;
             resultIcon.innerText = finalResult.icon;
-        } else if (!startScreen.classList.contains('hidden')) {
-            // If start screen is visible, update result texts for start screen (already updated above)
         }
-        // If result screen is visible, update result texts
-        // This was a duplicate call from above, removed
 
         // Update active language button
         langKoBtn.classList.remove('active');
@@ -258,9 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('logicTreeLang', lang);
-        // Do NOT regenerate currentTestQuestions here if test is active
-        if (testScreen.classList.contains('hidden')) { // Only regenerate if test is not active
-            generateRandomQuestions();
+        // Only regenerate questions if not currently in a test, to avoid changing questions mid-test
+        if (startScreen.classList.contains('hidden') && testScreen.classList.contains('hidden') && resultScreen.classList.contains('hidden')) {
+            generateRandomQuestions(); // Regenerate only if no screen is visible, implying a fresh start
+        } else if (startScreen.classList.contains('hidden') && !testScreen.classList.contains('hidden')) {
+            // If in test, just update UI texts without changing questions
+            // The showQuestion call inside updateUI handles re-rendering buttons
+        } else {
+             generateRandomQuestions(); // Always regenerate if starting a test or on result screen
         }
         updateUI(lang);
     }
