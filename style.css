@@ -506,3 +506,32 @@ footer {
         display: none !important;
     }
 }
+/* Secondary Results Styling */
+#secondary-results {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--ad-border);
+    text-align: center; /* Center the content for a cleaner look */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.secondary-results-title {
+    font-size: 1.2rem;
+    color: var(--question-text-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.secondary-result-item {
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.secondary-result-item strong {
+    color: var(--primary-color);
+}
+
