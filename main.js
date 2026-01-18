@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 데이터 구조 정의
     const questions = [
         {
-            text: "IF 길을 가다가 값비싸 보이는 지갑을 주웠다. THEN...",
+            text: "길을 가다가 값비싸 보이는 지갑을 주웠다...",
             choices: [
                 { text: "가까운 경찰서에 바로 가져다준다.", scores: { order: 1 } },
                 { text: "주인을 찾아주기 위해 지갑을 열어 신분증을 확인한다.", scores: { chaos: 1, emotion: 1 } },
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            text: "IF 팀 프로젝트에서 아무도 힘든 역할을 맡으려 하지 않는다. THEN...",
+            text: "팀 프로젝트에서 아무도 힘든 역할을 맡으려 하지 않는다...",
             choices: [
                 { text: "모두를 위해 내가 총대를 메고 힘든 역할을 자처한다.", scores: { emotion: 1, order: 1 } },
                 { text: "가장 합리적이고 공정한 방법으로 역할을 분담하자고 제안한다.", scores: { logic: 2 } },
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            text: "IF 내일이 세상의 마지막 날이라는 것이 확실해졌다. THEN...",
+            text: "내일이 세상의 마지막 날이라는 것이 확실해졌다...",
             choices: [
                 { text: "사랑하는 사람들과 마지막 순간을 함께 보낸다.", scores: { emotion: 2 } },
                 { text: "혼란 속에서 질서를 유지하기 위해 사람들을 돕는다.", scores: { order: 2 } },
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            text: "IF 매우 중요한 시험 전날, 친구가 급한 고민 상담을 요청했다. THEN...",
+            text: "매우 중요한 시험 전날, 친구가 급한 고민 상담을 요청했다...",
             choices: [
                 { text: "시험이 중요하지만, 친구를 외면할 수 없어 이야기를 들어준다.", scores: { emotion: 2 } },
                 { text: "친구에게 상황을 설명하고, 시험이 끝난 직후에 바로 만나자고 약속한다.", scores: { logic: 1, order: 1 } },
