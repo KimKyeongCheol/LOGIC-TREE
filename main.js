@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareKakaoBtn = document.getElementById('share-kakaotalk');
     const shareTwitterBtn = document.getElementById('share-twitter');
     const shareFacebookBtn = document.getElementById('share-facebook');
+    const shortSummaryDiv = document.getElementById('short-summary');
+    const humorousInsightDiv = document.getElementById('humorous-insight');
+    const callToActionDiv = document.getElementById('call-to-action');
 
     let currentQuestionIndex = 0;
     let scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
@@ -52,24 +55,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 LOGIC_MASTER: {
                     title: "논리주의 분석가 🧠",
                     description: "당신은 감정이나 불확실성에 휘둘리지 않고, 오직 데이터와 명확한 사실에 근거하여 판단하는 냉철한 마인드의 소유자입니다. 모든 상황을 객관적으로 파악하고 가장 효율적이며 합리적인 해결책을 찾아내는 데 탁월한 능력을 발휘합니다.",
+                    shortSummary: "데이터와 논리로 무장한 당신, 감성은 잠시 접어두세요! 숫자가 당신의 언어이고, 팩트만이 진실입니다. 복잡한 문제를 명쾌하게 풀어내는 당신은, 마치 살아있는 계산기같네요!",
+                    humorousInsight: "당신에게 '직감'이란, 아직 데이터로 증명되지 않은 '가설'일 뿐! 😂 사랑도, 우정도, 효율성이 우선인 당신, 가끔은 머리 말고 가슴이 시키는 일을 해보는 건 어때요?",
+                    callToAction: "당신의 비범한 논리력을 세상에 보여주세요! 이 결과를 공유하고, 친구들의 마인드 유형도 분석해보세요!",
                     icon: "🧠",
                     className: "result-logic"
                 },
                 CHAOTIC_AGENT: {
                     title: "혼돈의 에이전트 🌪️",
                     description: "당신은 예측 불가능한 에너지와 창의력으로 가득 찬 마인드입니다. 정해진 규칙이나 틀에 얽매이는 것을 싫어하며, 즉흥적이고 자유로운 방식으로 새로운 가능성을 탐색합니다. 당신의 행동은 때로는 혼란을 야기하지만, 그 속에서 혁신적인 아이디어가 탄생하곤 합니다.",
+                    shortSummary: "규칙? 그게 뭔가요? 먹는 건가요? 😋 당신은 예측 불가능한 매력으로 가득 찬, 톡톡 튀는 아이디어 뱅크! 정해진 틀을 깨부수고 새로운 길을 개척하는 진정한 혁신가입니다.",
+                    humorousInsight: "당신의 가방 속은 마치 우주와 같죠? 어디서 뭐가 튀어나올지 아무도 모릅니다! 계획은 즉흥적으로 세워야 제맛이라는 당신, 예상치 못한 곳에서 인생의 해답을 찾기도 합니다.",
+                    callToAction: "세상은 당신의 혼돈을 기다립니다! 당신의 독특한 마인드 유형을 공유하고, 친구들에게 신선한 충격을 선사하세요!",
                     icon: "🌪️",
                     className: "result-chaos"
                 },
                 ORDERLY_GUARDIAN: {
                     title: "질서의 수호자 🛡️",
                     description: "당신은 안정과 조화를 최우선으로 생각하는 책임감 강한 마인드입니다. 사회의 규칙과 질서를 중요하게 여기며, 혼란스러운 상황에서도 평정심을 잃지 않고 체계적인 해결책을 모색합니다. 공동체의 안녕을 위해 헌신하며, 모든 것이 제자리에 있을 때 편안함을 느낍니다.",
+                    shortSummary: "세상의 질서를 수호하는 당신은, 마치 움직이는 도서관이자 꼼꼼한 플래너! 📚 모든 것을 제자리에 두고, 예측 가능한 삶에서 안정감을 느낍니다. 당신의 존재 자체가 평화입니다.",
+                    humorousInsight: "당신은 약속 시간에 늦는 법이 없죠? 심지어 '미리 가서 기다리는' 유형! 계획에 없던 서프라이즈는 당신을 혼란스럽게 하지만, 당신의 질서는 모두에게 안도감을 줍니다. 가끔은 '무계획'도 계획의 일부라고 생각해보는 건 어때요?",
+                    callToAction: "안정과 조화의 아이콘! 당신의 질서정연한 마인드를 공유하고, 친구들의 혼란스러운 세상을 구원해주세요!",
                     icon: "🛡️",
                     className: "result-order"
                 },
                 EMPATHETIC_SOUL: {
                     title: "공감적 중재자 ❤️",
                     description: "당신은 타인의 감정을 깊이 이해하고 공감하는 능력이 뛰어난 따뜻한 마인드입니다. 이성적인 판단보다는 사람 사이의 관계와 감정적인 조화를 중요하게 생각하며, 갈등을 중재하고 모두가 행복할 수 있는 길을 모색합니다. 당신의 존재 자체가 주변 사람들에게 위안과 힘이 됩니다.",
+                    shortSummary: "타인의 마음을 읽는 능력자! 💖 당신의 공감 능력은 마치 마법과 같아서, 주변 사람들에게 따뜻한 위로와 힘을 줍니다. 당신이 있는 곳엔 언제나 평화가 찾아옵니다.",
+                    humorousInsight: "누군가 힘들어하면 당신의 지갑은 자동으로 열리고, 친구의 고민은 밤새도록 들어주는 당신! 😂 가끔은 나 자신을 먼저 챙기는 것도 중요해요. 타인의 감정 쓰레기통이 되지는 마시길!",
+                    callToAction: "세상에 따뜻한 위로가 필요한가요? 당신의 공감 가득한 마인드를 공유하고, 지친 이들에게 힘을 불어넣어 주세요!",
                     icon: "❤️",
                     className: "result-emotion"
                 }
@@ -93,24 +108,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 LOGIC_MASTER: {
                     title: "Logic Master 🧠",
                     description: "You are a cool-headed analyst who makes decisions based solely on data and clear facts, unswayed by emotions or uncertainty. You excel at objectively grasping all situations and finding the most efficient and rational solutions.",
+                    shortSummary: "Armed with data and logic, emotions can take a backseat! Numbers are your language, and facts are the only truth. You're like a living calculator, unraveling complex problems with brilliant clarity.",
+                    humorousInsight: "For you, 'gut feeling' is just a 'hypothesis' yet to be proven by data! 😂 Efficiency is key in love and friendship. Ever tried listening to your heart, not just your head?",
+                    callToAction: "Unleash your extraordinary logic on the world! Share your results and analyze your friends' mind types too!",
                     icon: "🧠",
                     className: "result-logic"
                 },
                 CHAOTIC_AGENT: {
                     title: "Chaotic Agent 🌪️",
                     description: "You are a mind full of unpredictable energy and creativity. You dislike being bound by fixed rules or frameworks, exploring new possibilities spontaneously and freely. Your actions sometimes cause chaos, but innovative ideas often emerge from them.",
+                    shortSummary: "Rules? What are those? 😋 You're a unpredictable, vibrant idea factory! Breaking free from norms, you forge new paths as a true innovator.",
+                    humorousInsight: "Your bag is like a universe, you never know what'll pop out! 😂 For you, plans are best made spontaneously. You often find life's answers in unexpected places.",
+                    callToAction: "The world awaits your beautiful chaos! Share your unique mind type and shock your friends with a dose of fresh perspective!",
                     icon: "🌪️",
                     className: "result-chaos"
                 },
                 ORDERLY_GUARDIAN: {
                     title: "Orderly Guardian 🛡️",
                     description: "You are a responsible mind that prioritizes stability and harmony. You value societal rules and order, seeking systematic solutions even in chaotic situations without losing composure. You dedicate yourself to the well-being of the community and feel at peace when everything is in its proper place.",
+                    shortSummary: "A guardian of order, you're a walking library and a meticulous planner! 📚 You find comfort in everything being in its place and a predictable life. Your very presence brings peace.",
+                    humorousInsight: "You're never late, are you? In fact, you're the 'early bird' type! Unexpected surprises throw you off, but your order brings relief to all. Perhaps 'no plan' can also be a plan?",
+                    callToAction: "Icon of stability and harmony! Share your orderly mind and bring salvation to your friends' chaotic worlds!",
                     icon: "🛡️",
                     className: "result-order"
                 },
                 EMPATHETIC_SOUL: {
                     title: "Empathetic Soul ❤️",
                     description: "You are a warm mind with an exceptional ability to deeply understand and empathize with others' feelings. You prioritize human relationships and emotional harmony over rational judgment, mediating conflicts and seeking paths where everyone can be happy. Your very presence brings comfort and strength to those around you.",
+                    shortSummary: "A master of reading hearts! 💖 Your empathy is like magic, offering warm comfort and strength to those around you. Peace always finds its way where you are.",
+                    humorousInsight: "When someone's struggling, your wallet opens automatically, and you'll listen to a friend's worries all night! 😂 Remember to take care of yourself first. Don't be a human emotional dumpster!",
+                    callToAction: "Is the world in need of warm solace? Share your empathetic mind and empower those who are weary!",
                     icon: "❤️",
                     className: "result-emotion"
                 }
@@ -384,11 +411,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getShareText() {
         const primaryTitle = lastCalculatedResult.primary.title;
-        const primaryDescription = lastCalculatedResult.primary.description;
+        const primaryDescription = lastCalculatedResult.primary.description; // This is the main long description
+        const shortSummary = lastCalculatedResult.primary.shortSummary; // New
+        const humorousInsight = lastCalculatedResult.primary.humorousInsight; // New
         const siteUrl = window.location.href; // Get current page URL
 
-        let shareText = `${langData[currentLang].appTitle} ${langData[currentLang].resultScreen.h2}\n${primaryTitle}\n\n${primaryDescription}\n\n`;
+        let shareText = `${langData[currentLang].appTitle} ${langData[currentLang].resultScreen.h2}\n${primaryTitle}\n\n`;
 
+        // Use shortSummary if available, otherwise fall back to full description (truncated)
+        if (shortSummary) {
+            shareText += `${shortSummary}\n\n`;
+        } else {
+            // Truncate description for sharing platforms that have character limits
+            const truncatedDescription = primaryDescription.substring(0, 100) + (primaryDescription.length > 100 ? '...' : '');
+            shareText += `${truncatedDescription}\n\n`;
+        }
+
+        if (humorousInsight) {
+            shareText += `${humorousInsight}\n\n`;
+        }
+        
         if (lastCalculatedResult.secondary && lastCalculatedResult.secondary.length > 0) {
             shareText += currentLang === 'ko' ? "또한, 당신은 다음과 같은 성향을 보입니다:\n" : "Additionally, you show tendencies towards:\n";
             lastCalculatedResult.secondary.forEach(secondary => {
@@ -488,6 +530,28 @@ document.addEventListener('DOMContentLoaded', () => {
              secondaryResultsDiv.appendChild(p);
         }
 
+        // Display new storytelling fields
+        if (fullResult.primary.shortSummary) {
+            shortSummaryDiv.innerText = fullResult.primary.shortSummary;
+            shortSummaryDiv.classList.remove('hidden');
+        } else {
+            shortSummaryDiv.classList.add('hidden');
+        }
+
+        if (fullResult.primary.humorousInsight) {
+            humorousInsightDiv.innerText = fullResult.primary.humorousInsight;
+            humorousInsightDiv.classList.remove('hidden');
+        } else {
+            humorousInsightDiv.classList.add('hidden');
+        }
+        
+        if (fullResult.primary.callToAction) {
+            callToActionDiv.innerText = fullResult.primary.callToAction;
+            callToActionDiv.classList.remove('hidden');
+        } else {
+            callToActionDiv.classList.add('hidden');
+        }
+
         testScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
         document.getElementById('share-buttons').classList.remove('hidden'); // Ensure share buttons are visible
@@ -500,6 +564,9 @@ document.addEventListener('DOMContentLoaded', () => {
       startScreen.classList.remove('hidden');
       resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion', 'result-default');
       document.getElementById('share-buttons').classList.add('hidden'); // Hide share buttons on restart
+      shortSummaryDiv.classList.add('hidden');
+      humorousInsightDiv.classList.add('hidden');
+      callToActionDiv.classList.add('hidden');
     }
 
 
@@ -520,6 +587,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ensure start screen UI is updated and new questions are ready
         generateRandomQuestions(); // Prepare fresh questions for the start screen
         updateUI(currentLang); // Update UI to reflect start screen content
+        shortSummaryDiv.classList.add('hidden');
+        humorousInsightDiv.classList.add('hidden');
+        callToActionDiv.classList.add('hidden');
     }
 
     // --- Event Listeners ---
