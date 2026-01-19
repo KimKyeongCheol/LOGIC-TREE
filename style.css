@@ -78,6 +78,7 @@ header {
 #header-title-group {
     display: flex;
     align-items: center; /* Vertically align logo and h1 */
+    margin-right: auto; /* Push this group to the left and other items to the right */
 }
 
 h1 {
