@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loading-indicator'); // Get reference to loading indicator
 
     const adminScreen = document.getElementById('admin-screen');
-    const adminLangKoBtn = document.getElementById('admin-lang-ko');
-    const adminLangEnBtn = document.getElementById('admin-lang-en');
+    // const adminLangKoBtn = document.getElementById('admin-lang-ko'); // Removed as this element does not exist
+    // const adminLangEnBtn = document.getElementById('admin-lang-en'); // Removed as this element does not exist
     const adminAddQuestionBtn = document.getElementById('admin-add-question-btn');
     const adminQuestionList = document.getElementById('admin-question-list');
     const adminQuestionForm = document.getElementById('admin-question-form');
@@ -1101,18 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startScreen.classList.remove('hidden');
     });
 
-    // Admin Screen Event Listeners
-    adminLangKoBtn.addEventListener('click', () => {
-        adminLangKoBtn.classList.add('active');
-        adminLangEnBtn.classList.remove('active');
-        renderAdminQuestions('ko');
-    });
-
-    adminLangEnBtn.addEventListener('click', () => {
-        adminLangEnBtn.classList.add('active');
-        adminLangKoBtn.classList.remove('active');
-        renderAdminQuestions('en');
-    });
+    // Admin Screen Event Listeners (Removed adminLangKoBtn and adminLangEnBtn listeners)
 
     adminAddQuestionBtn.addEventListener('click', () => {
         // adminQuestionForm.reset(); // HTML form reset won't clear new textareas by ID
