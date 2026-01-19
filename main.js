@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTestQuestions = [];
 
     const NUM_QUESTIONS_PER_TEST = 20; // Number of questions to show per test run (increased for more robust results)
+    const QUESTIONS_PER_PAGE_ADMIN = 10; // Number of questions to show per page in admin view
+    let currentPageAdmin = 1; // Current page for admin view
 
     // Helper functions for loading indicator
     function showLoading() {
@@ -90,64 +92,163 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Renders the list of questions in the admin screen
-    function renderAdminQuestions() { // Removed lang parameter
-        adminQuestionList.innerHTML = ''; // Clear previous list
-        const questionsKo = langData.ko.questions;
-        const questionsEn = langData.en.questions;
+        // Renders the list of questions in the admin screen
 
-        if (!questionsKo || questionsKo.length === 0) {
-            adminQuestionList.innerHTML = `<p>등록된 질문이 없습니다. / No questions registered.</p>`;
-            return;
-        }
+        function renderAdminQuestions() {
 
-        questionsKo.forEach((questionKo, index) => {
-            const questionEn = questionsEn[index] || { text: `[EN translation needed] ${questionKo.text}`, choices: questionKo.choices.map(c => ({...c, text: `[EN translation needed] ${c.text}`})) }; // Get corresponding English question or create placeholder
-            
-            const questionItem = document.createElement('div');
-            questionItem.classList.add('question-item');
-            questionItem.dataset.index = index; // Store index for editing/deleting
+            adminQuestionList.innerHTML = ''; // Clear previous list
 
-            let choicesHtml = '';
-            // Display both KO and EN choices
-            for(let i=0; i<questionKo.choices.length; i++) {
-                const choiceKo = questionKo.choices[i];
-                const choiceEn = questionEn.choices[i] || { text: `[EN translation needed] ${choiceKo.text}`, scores: choiceKo.scores };
-                const effectiveScores = { ...choiceKo.scores }; // Scores are assumed to be consistent
+    
 
-                choicesHtml += `<li><strong>KO:</strong> ${choiceKo.text} <br><strong>EN:</strong> ${choiceEn.text} (L:${effectiveScores.logic}, E:${effectiveScores.emotion}, O:${effectiveScores.order}, C:${effectiveScores.chaos})</li>`;
+            // Create a copy and sort questions by ID before rendering
+
+            const allQuestionsKo = [...langData.ko.questions].sort((a, b) => a.id - b.id);
+
+            const allQuestionsEn = [...langData.en.questions].sort((a, b) => a.id - b.id); // Assuming parallel IDs
+
+    
+
+            if (!allQuestionsKo || allQuestionsKo.length === 0) {
+
+                adminQuestionList.innerHTML = `<p>등록된 질문이 없습니다. / No questions registered.</p>`;
+
+                renderPaginationControls(0); // Render pagination with 0 total questions
+
+                return;
+
             }
-            
 
-            questionItem.innerHTML = `
-                <div class="question-item-text">
-                    <div class="question-lang-line">${index + 1}. <strong>KO:</strong> ${questionKo.text} (Weight: ${questionKo.weight || 1})</div>
-                    <div class="question-lang-line"><strong>EN:</strong> ${questionEn.text}</div>
-                </div>
-                <ul>${choicesHtml}</ul>
-                <div class="question-item-controls">
-                    <button class="edit-btn">편집 / Edit</button>
-                    <button class="delete-btn">삭제 / Delete</button>
-                </div>
-            `;
-            adminQuestionList.appendChild(questionItem);
-        });
+    
 
-        // Attach event listeners for edit/delete buttons
-        adminQuestionList.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const index = e.target.closest('.question-item').dataset.index;
-                editQuestion(parseInt(index)); // Removed lang parameter
+            const totalQuestions = allQuestionsKo.length;
+
+            const totalPages = Math.ceil(totalQuestions / QUESTIONS_PER_PAGE_ADMIN);
+
+    
+
+            // Ensure currentPageAdmin is within valid range
+
+            if (currentPageAdmin < 1) currentPageAdmin = 1;
+
+            if (currentPageAdmin > totalPages) currentPageAdmin = totalPages;
+
+    
+
+            const startIndex = (currentPageAdmin - 1) * QUESTIONS_PER_PAGE_ADMIN;
+
+            const endIndex = startIndex + QUESTIONS_PER_PAGE_ADMIN;
+
+    
+
+            const questionsToDisplayKo = allQuestionsKo.slice(startIndex, endIndex);
+
+            const questionsToDisplayEn = allQuestionsEn.slice(startIndex, endIndex);
+
+    
+
+            questionsToDisplayKo.forEach((questionKo, idx) => {
+
+                // Find the corresponding English question using its ID
+
+                const questionEn = questionsToDisplayEn.find(q => q.id === questionKo.id) || { text: `[EN translation needed] ${questionKo.text}`, choices: questionKo.choices.map(c => ({...c, text: `[EN translation needed] ${c.text}`})) };
+
+                
+
+                const questionItem = document.createElement('div');
+
+                questionItem.classList.add('question-item');
+
+                // Use the original index from the *allQuestionsKo* array, not the sliced array's index
+
+                const originalIndex = allQuestionsKo.findIndex(q => q.id === questionKo.id);
+
+                questionItem.dataset.index = originalIndex; // Store original index for editing/deleting
+
+    
+
+                let choicesHtml = '';
+
+                // Display both KO and EN choices
+
+                for(let i=0; i<questionKo.choices.length; i++) {
+
+                    const choiceKo = questionKo.choices[i];
+
+                    const choiceEn = questionEn.choices[i] || { text: `[EN translation needed] ${choiceKo.text}`, scores: choiceKo.scores };
+
+                    const effectiveScores = { ...choiceKo.scores }; // Scores are assumed to be consistent
+
+    
+
+                    choicesHtml += `<li><strong>KO:</strong> ${choiceKo.text} <br><strong>EN:</strong> ${choiceEn.text} (L:${effectiveScores.logic}, E:${effectiveScores.emotion}, O:${effectiveScores.order}, C:${effectiveScores.chaos})</li>`;
+
+                }
+
+                
+
+                questionItem.innerHTML = `
+
+                    <div class="question-item-text">
+
+                        <div class="question-lang-line">${questionKo.id}. <strong>KO:</strong> ${questionKo.text} (Weight: ${questionKo.weight || 1})</div>
+
+                        <div class="question-lang-line"><strong>EN:</strong> ${questionEn.text}</div>
+
+                    </div>
+
+                    <ul>${choicesHtml}</ul>
+
+                    <div class="question-item-controls">
+
+                        <button class="edit-btn">편집 / Edit</button>
+
+                        <button class="delete-btn">삭제 / Delete</button>
+
+                    </div>
+
+                `;
+
+                adminQuestionList.appendChild(questionItem);
+
             });
-        });
 
-        adminQuestionList.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const index = e.target.closest('.question-item').dataset.index;
-                deleteQuestion(parseInt(index)); // Removed lang parameter
+    
+
+            // Render pagination controls
+
+            renderPaginationControls(totalQuestions, totalPages);
+
+    
+
+            // Attach event listeners for edit/delete buttons
+
+            adminQuestionList.querySelectorAll('.edit-btn').forEach(button => {
+
+                button.addEventListener('click', (e) => {
+
+                    const index = e.target.closest('.question-item').dataset.index;
+
+                    editQuestion(parseInt(index));
+
+                });
+
             });
-        });
-    }
+
+    
+
+            adminQuestionList.querySelectorAll('.delete-btn').forEach(button => {
+
+                button.addEventListener('click', (e) => {
+
+                    const index = e.target.closest('.question-item').dataset.index;
+
+                    deleteQuestion(parseInt(index));
+
+                });
+
+            });
+
+        }
 
     // Helper for admin form to add a choice field
     function addChoiceField(choiceIndex = adminChoicesContainer.children.length, choiceKo = { text: '', scores: { logic: 0, emotion: 0, order: 0, chaos: 0 } }, choiceEn = { text: '', scores: { logic: 0, emotion: 0, order: 0, chaos: 0 } }) {
@@ -216,6 +317,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 adminQuestionForm.reset();
                 adminChoicesContainer.innerHTML = '';
             }
+        }
+    }
+
+    const adminPaginationControls = document.getElementById('admin-pagination-controls');
+
+    function renderPaginationControls(totalQuestions, totalPages) {
+        adminPaginationControls.innerHTML = '';
+        if (totalPages <= 1) return;
+
+        const createButton = (text, page, isDisabled = false) => {
+            const button = document.createElement('button');
+            button.innerText = text;
+            button.classList.add('pagination-btn');
+            if (isDisabled) {
+                button.disabled = true;
+                button.classList.add('disabled');
+            } else {
+                button.addEventListener('click', () => goToAdminPage(page));
+            }
+            return button;
+        };
+
+        // Previous button
+        adminPaginationControls.appendChild(createButton('이전', currentPageAdmin - 1, currentPageAdmin === 1));
+
+        // Page numbers
+        let startPage = Math.max(1, currentPageAdmin - 2);
+        let endPage = Math.min(totalPages, currentPageAdmin + 2);
+
+        if (currentPageAdmin <= 3) {
+            endPage = Math.min(totalPages, 5);
+        } else if (currentPageAdmin > totalPages - 2) {
+            startPage = Math.max(1, totalPages - 4);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const button = createButton(i, i);
+            if (i === currentPageAdmin) {
+                button.classList.add('active');
+            }
+            adminPaginationControls.appendChild(button);
+        }
+
+        // Next button
+        adminPaginationControls.appendChild(createButton('다음', currentPageAdmin + 1, currentPageAdmin === totalPages));
+    }
+
+    function goToAdminPage(page) {
+        if (page < 1) page = 1;
+        // Recalculate totalPages to ensure it's up-to-date
+        const totalQuestions = langData.ko.questions.length;
+        const totalPages = Math.ceil(totalQuestions / QUESTIONS_PER_PAGE_ADMIN);
+        if (page > totalPages) page = totalPages;
+
+        if (page !== currentPageAdmin) {
+            currentPageAdmin = page;
+            renderAdminQuestions(); // Re-render the question list for the new page
         }
     }
     
@@ -1085,8 +1243,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultScreen.classList.add('hidden');
                 // Show admin screen
                 adminScreen.classList.remove('hidden');
+                currentPageAdmin = 1; // Reset to first page when opening admin screen
                 // Load and render questions for admin view
-                renderAdminQuestions(); // Will create this function later
+                renderAdminQuestions();
             } else {
                 // Hide admin screen
                 adminScreen.classList.add('hidden');
