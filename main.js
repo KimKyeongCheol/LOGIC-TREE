@@ -478,22 +478,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getShareText() {
         const primaryTitle = lastCalculatedResult.primary.title;
-        const primaryDescription = lastCalculatedResult.primary.description; // This is the main long description
-        const shortSummary = lastCalculatedResult.primary.shortSummary; // New
-        const humorousInsight = lastCalculatedResult.primary.humorousInsight; // New
-        const siteUrl = window.location.href; // Get current page URL
+        const primaryDescription = lastCalculatedResult.primary.description;
+        const shortSummary = lastCalculatedResult.primary.shortSummary;
+        const humorousInsight = lastCalculatedResult.primary.humorousInsight;
+        const siteUrl = window.location.href;
+
+        // Get the high score insight and low score advice directly from the stored lastCalculatedResult
+        const highScoreInsight = lastCalculatedResult.primary.highScoreSnippet;
+        let lowScoreAdvice = '';
+        if (lastCalculatedResult.lowestScoreTypeKey && langData[currentLang].results[lastCalculatedResult.lowestScoreTypeKey]) {
+            lowScoreAdvice = langData[currentLang].results[lastCalculatedResult.lowestScoreTypeKey].lowScoreSnippet;
+        }
 
         let shareText = `${langData[currentLang].appTitle} ${langData[currentLang].resultScreen.h2}\n${primaryTitle}\n\n`;
 
-        // Use shortSummary if available, otherwise fall back to full description (truncated)
-        if (shortSummary) {
+        if (highScoreInsight) {
+            shareText += `${highScoreInsight}\n\n`; // Add high score insight
+        } else if (shortSummary) { // Fallback to shortSummary if no high score insight
             shareText += `${shortSummary}\n\n`;
         } else {
-            // Truncate description for sharing platforms that have character limits
             const truncatedDescription = primaryDescription.substring(0, 100) + (primaryDescription.length > 100 ? '...' : '');
             shareText += `${truncatedDescription}\n\n`;
         }
 
+        if (lowScoreAdvice) {
+            shareText += `${lowScoreAdvice}\n\n`; // Add low score advice
+        }
+        
         if (humorousInsight) {
             shareText += `${humorousInsight}\n\n`;
         }
