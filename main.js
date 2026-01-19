@@ -163,13 +163,15 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
 
         choiceItem.innerHTML = `
-            <div class="field-group">
-                <label>선택지 텍스트 (KO)</label>
-                <input type="text" class="choice-text-ko" placeholder="선택지 텍스트 (KO)" value="${choiceKo.text}" required>
-            </div>
-            <div class="field-group">
-                <label>Choice Text (EN)</label>
-                <input type="text" class="choice-text-en" placeholder="Choice Text (EN)" value="${choiceEn.text}" required>
+            <div class="dual-language-field">
+                <div class="field-group">
+                    <label>선택지 텍스트 (KO)</label>
+                    <input type="text" class="choice-text-ko" placeholder="선택지 텍스트 (KO)" value="${choiceKo.text}" required>
+                </div>
+                <div class="field-group">
+                    <label>Choice Text (EN)</label>
+                    <input type="text" class="choice-text-en" placeholder="Choice Text (EN)" value="${choiceEn.text}" required>
+                </div>
             </div>
             <div class="score-inputs-wrapper">
                 ${scoreInputs}

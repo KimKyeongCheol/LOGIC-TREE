@@ -222,7 +222,6 @@ footer {
     color: var(--ad-text-color);
     padding: 0.8rem;
     margin: 0.5rem;
-    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
@@ -973,6 +972,12 @@ footer {
 }
 
 /* No specific media query overrides needed for stacking as default is now vertical */
+@media (min-width: 1024px) {
+    .dual-language-field {
+        flex-direction: row;
+        gap: 20px;
+    }
+}
 @media (max-width: 768px) {
     /* Existing mobile styles should largely be compatible with the new vertical layout */
     /* If specific adjustments are needed, they can be added here. */
