@@ -98,6 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             questions: [] // Questions will be loaded dynamically
         },
+        shareButtons: {
+            kakao: "카카오톡 공유",
+            twitter: "트위터 공유",
+            facebook: "페이스북 공유",
+            saveImage: "이미지로 저장"
+        }
         en: {
             appTitle: "LOGIC-TREE",
             startScreen: {
@@ -158,6 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             questions: [] // Questions will be loaded dynamically
+        },
+        shareButtons: {
+            kakao: "Share KakaoTalk",
+            twitter: "Share Twitter",
+            facebook: "Share Facebook",
+            saveImage: "Save as Image"
         }
     };
 
@@ -225,6 +237,12 @@ document.addEventListener('DOMContentLoaded', () => {
             resultTitle.innerText = finalResult.title;
             resultDescription.innerText = finalResult.description;
             resultIcon.innerText = finalResult.icon;
+
+            // Update share button texts
+            document.getElementById('share-kakaotalk').innerText = data.shareButtons.kakao;
+            document.getElementById('share-twitter').innerText = data.shareButtons.twitter;
+            document.getElementById('share-facebook').innerText = data.shareButtons.facebook;
+            document.getElementById('save-image-btn').innerText = data.shareButtons.saveImage;
         }
 
         // Update active language button
