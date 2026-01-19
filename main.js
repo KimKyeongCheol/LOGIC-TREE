@@ -115,13 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const choiceEn = questionEn.choices[i] || { text: `[EN translation needed] ${choiceKo.text}`, scores: choiceKo.scores };
                 const effectiveScores = { ...choiceKo.scores }; // Scores are assumed to be consistent
 
-                choicesHtml += `<li><strong>KO:</strong> ${choiceKo.text} | <strong>EN:</strong> ${choiceEn.text} (L:${effectiveScores.logic}, E:${effectiveScores.emotion}, O:${effectiveScores.order}, C:${effectiveScores.chaos})</li>`;
+                choicesHtml += `<li><strong>KO:</strong> ${choiceKo.text} <br><strong>EN:</strong> ${choiceEn.text} (L:${effectiveScores.logic}, E:${effectiveScores.emotion}, O:${effectiveScores.order}, C:${effectiveScores.chaos})</li>`;
             }
             
 
             questionItem.innerHTML = `
                 <div class="question-item-text">
-                    ${index + 1}. <strong>KO:</strong> ${questionKo.text} (Weight: ${questionKo.weight || 1}) <br> <strong>EN:</strong> ${questionEn.text}
+                    <div class="question-lang-line">${index + 1}. <strong>KO:</strong> ${questionKo.text} (Weight: ${questionKo.weight || 1})</div>
+                    <div class="question-lang-line"><strong>EN:</strong> ${questionEn.text}</div>
                 </div>
                 <ul>${choicesHtml}</ul>
                 <div class="question-item-controls">

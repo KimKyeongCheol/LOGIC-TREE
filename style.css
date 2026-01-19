@@ -767,6 +767,14 @@ footer {
     color: var(--question-text-color);
 }
 
+.question-lang-line {
+    margin-bottom: 5px; /* Add some spacing between KO and EN lines */
+}
+
+.question-lang-line:last-child {
+    margin-bottom: 0;
+}
+
 .question-item-controls {
     display: flex;
     gap: 8px;
@@ -895,6 +903,8 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 3px;
+    flex: 1 1 auto; /* Allow shrinking and growing, with automatic basis */
+    max-width: 50px; /* Enforce a max width for each input */
 }
 
 .score-input-group label {
@@ -946,7 +956,8 @@ footer {
 }
 
 .dual-language-field .field-group {
-    flex: 1;
+    flex: 1 1 0%; /* Allow shrinking and set initial size */
+    min-width: 0; /* Important for flex items with content that might overflow */
     display: flex;
     flex-direction: column;
 }
@@ -982,3 +993,4 @@ footer {
     /* Existing mobile styles should largely be compatible with the new vertical layout */
     /* If specific adjustments are needed, they can be added here. */
 }
+
