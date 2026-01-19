@@ -97,13 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             questions: [] // Questions will be loaded dynamically
+            ,
+            shareButtons: {
+                kakao: "카카오톡 공유",
+                twitter: "트위터 공유",
+                facebook: "페이스북 공유",
+                saveImage: "이미지로 저장"
+            }
         },
-        shareButtons: {
-            kakao: "카카오톡 공유",
-            twitter: "트위터 공유",
-            facebook: "페이스북 공유",
-            saveImage: "이미지로 저장"
-        }
         en: {
             appTitle: "LOGIC-TREE",
             startScreen: {
@@ -164,12 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             },
             questions: [] // Questions will be loaded dynamically
-        },
-        shareButtons: {
-            kakao: "Share KakaoTalk",
-            twitter: "Share Twitter",
-            facebook: "Share Facebook",
-            saveImage: "Save as Image"
+            ,
+            shareButtons: {
+                kakao: "Share KakaoTalk",
+                twitter: "Share Twitter",
+                facebook: "Share Facebook",
+                saveImage: "Save as Image"
+            }
         }
     };
 
