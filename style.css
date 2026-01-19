@@ -563,6 +563,12 @@ footer {
     text-align: center;
 }
 
+#score-chart canvas { /* Target the canvas directly */
+    height: 300px !important; /* Fixed height for the chart */
+    max-height: 50vh !important; /* Max height relative to viewport */
+    width: 100% !important; /* Ensure it takes full width of its container */
+}
+
 #score-chart h3 {
     font-size: 1.3rem;
     color: var(--question-text-color);
