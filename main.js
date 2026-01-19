@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn'); // Hamburger button
     const desktopNavControls = document.getElementById('desktop-nav-controls'); // Desktop navigation container
     const mobileFullScreenMenu = document.getElementById('mobile-full-screen-menu'); // Mobile full-screen menu overlay
-    const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn'); // Mobile menu close button
-
+    // mobileMenuCloseBtn removed as it is no longer needed
     // Mobile specific controls (inside mobileFullScreenMenu)
     const goHomeBtnMobile = document.getElementById('go-to-start-btn-mobile');
     const langKoBtnMobile = document.getElementById('lang-ko-mobile');
@@ -1238,10 +1237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    mobileMenuCloseBtn.addEventListener('click', () => {
-        mobileFullScreenMenu.classList.remove('is-open');
-        hamburgerMenuBtn.innerText = '☰'; // Reset hamburger icon when closed by 'X' button
-    });
+    // mobileMenuCloseBtn event listener removed as the button no longer exists
 
     // Mobile menu specific listeners
     goHomeBtnMobile.addEventListener('click', () => { goToStartScreen(); mobileFullScreenMenu.classList.remove('is-open'); });
