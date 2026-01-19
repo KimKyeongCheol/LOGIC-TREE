@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // If the test screen is currently visible (meaning user was mid-test), 
         // force it to show the first question of the newly generated set in the new language.
         if (!testScreen.classList.contains('hidden')) {
-            currentQuestionIndex = 0; // Reset to the first question of the new set
+            // currentQuestionIndex = 0; // Removed to prevent resetting question index on language switch
             showQuestion(); 
         } else if (!resultScreen.classList.contains('hidden')) { // If result screen is visible, re-render it for new language
             showResult(); // Recalculate and display result with new language
