@@ -1416,15 +1416,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // --- Ad Hiding Functionality ---
-    function hideEmptyAdContainers() {
-        const adContainers = document.querySelectorAll('.ad-top, .ad-bottom, .ad-side-left, .ad-side-right');
-        adContainers.forEach(container => {
-            if (container.innerHTML.trim() === '') {
-                container.classList.add('hidden');
-            }
-        });
-    }
 
     // Load questions, then preferences, then generate initial questions, then hide empty ads
     loadQuestions().then(() => {
@@ -1436,7 +1427,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Initial question generation skipped: Question pool is empty or not properly loaded.");
             // Consider alerting the user or disabling start button if no questions can be loaded
         }
-        hideEmptyAdContainers();
         // Explicitly show the start screen after initial loading is complete
         startScreen.classList.remove('hidden');
     }).catch(error => {
