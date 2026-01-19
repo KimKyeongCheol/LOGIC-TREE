@@ -30,6 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const callToActionDiv = document.getElementById('call-to-action');
     const loadingIndicator = document.getElementById('loading-indicator'); // Get reference to loading indicator
 
+    const adminScreen = document.getElementById('admin-screen');
+    const adminLangKoBtn = document.getElementById('admin-lang-ko');
+    const adminLangEnBtn = document.getElementById('admin-lang-en');
+    const adminAddQuestionBtn = document.getElementById('admin-add-question-btn');
+    const adminQuestionList = document.getElementById('admin-question-list');
+    const adminQuestionForm = document.getElementById('admin-question-form');
+    const adminQuestionIndex = document.getElementById('admin-question-index');
+    const adminQuestionText = document.getElementById('admin-question-text');
+    const adminQuestionWeight = document.getElementById('admin-question-weight');
+    const adminChoicesContainer = document.getElementById('admin-choices-container');
+    const adminAddChoiceBtn = document.getElementById('admin-add-choice-btn');
+    const adminSaveQuestionBtn = document.getElementById('admin-save-question-btn');
+    const adminCancelEditBtn = document.getElementById('admin-cancel-edit-btn');
+
     let currentQuestionIndex = 0;
     let scores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
     let currentLang = 'ko';
@@ -50,6 +64,147 @@ document.addEventListener('DOMContentLoaded', () => {
             // Re-show appropriate screen after loading based on current state (e.g., start screen)
             // This is handled by loadPreferences or startTest
         }
+    }
+
+    // Admin functions for managing questions in localStorage
+    function loadQuestionsFromStorage() {
+        try {
+            const storedQuestions = localStorage.getItem('logicTreeQuestions');
+            if (storedQuestions) {
+                return JSON.parse(storedQuestions);
+            }
+        } catch (e) {
+            console.error("Error loading questions from localStorage:", e);
+        }
+        return null; // Return null if nothing found or error
+    }
+
+    function saveQuestionsToStorage(questionsData) {
+        try {
+            localStorage.setItem('logicTreeQuestions', JSON.stringify(questionsData));
+            console.log("Questions saved to localStorage successfully.");
+        } catch (e) {
+            console.error("Error saving questions to localStorage:", e);
+            alert("질문 저장에 실패했습니다. (Failed to save questions.)");
+        }
+    }
+
+    // Renders the list of questions in the admin screen
+    function renderAdminQuestions(lang) {
+        adminQuestionList.innerHTML = ''; // Clear previous list
+        const questions = langData[lang].questions;
+
+        if (!questions || questions.length === 0) {
+            adminQuestionList.innerHTML = `<p>${lang === 'ko' ? '등록된 질문이 없습니다.' : 'No questions registered.'}</p>`;
+            return;
+        }
+
+        questions.forEach((question, index) => {
+            const questionItem = document.createElement('div');
+            questionItem.classList.add('question-item');
+            questionItem.dataset.index = index; // Store index for editing/deleting
+
+            let choicesHtml = '';
+            // Ensure logic for scores is always present, even if 0
+            const defaultScores = { logic: 0, emotion: 0, order: 0, chaos: 0 };
+            question.choices.forEach(choice => {
+                const effectiveScores = { ...defaultScores, ...choice.scores };
+                choicesHtml += `<li>${choice.text} (L:${effectiveScores.logic}, E:${effectiveScores.emotion}, O:${effectiveScores.order}, C:${effectiveScores.chaos})</li>`;
+            });
+
+            questionItem.innerHTML = `
+                <div class="question-item-text">
+                    ${index + 1}. ${question.text} (Weight: ${question.weight || 1})
+                </div>
+                <ul>${choicesHtml}</ul>
+                <div class="question-item-controls">
+                    <button class="edit-btn">${lang === 'ko' ? '편집' : 'Edit'}</button>
+                    <button class="delete-btn">${lang === 'ko' ? '삭제' : 'Delete'}</button>
+                </div>
+            `;
+            adminQuestionList.appendChild(questionItem);
+        });
+
+        // Attach event listeners for edit/delete buttons
+        adminQuestionList.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const index = e.target.closest('.question-item').dataset.index;
+                editQuestion(lang, parseInt(index)); // Will create this function later
+            });
+        });
+
+        adminQuestionList.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const index = e.target.closest('.question-item').dataset.index;
+                deleteQuestion(lang, parseInt(index)); // Will create this function later
+            });
+        });
+    }
+
+    // Helper for admin form to add a choice field
+    function addChoiceField(choiceIndex = adminChoicesContainer.children.length, choice = { text: '', scores: { logic: 0, emotion: 0, order: 0, chaos: 0 } }) {
+        const choiceItem = document.createElement('div');
+        choiceItem.classList.add('admin-choice-item');
+        choiceItem.dataset.choiceIndex = choiceIndex;
+
+        // Create score inputs
+        const scoreInputs = ['logic', 'emotion', 'order', 'chaos'].map(type => `
+            <input type="number" placeholder="${type.charAt(0).toUpperCase()}" data-score-type="${type}" value="${choice.scores[type] || 0}" min="-5" max="5" step="1">
+        `).join('');
+
+        choiceItem.innerHTML = `
+            <input type="text" placeholder="${currentLang === 'ko' ? '선택지 텍스트' : 'Choice Text'}" value="${choice.text}" required>
+            ${scoreInputs}
+            <button type="button" class="remove-choice-btn">${currentLang === 'ko' ? 'X' : 'X'}</button>
+        `;
+        adminChoicesContainer.appendChild(choiceItem);
+
+        // Attach event listener to remove button
+        choiceItem.querySelector('.remove-choice-btn').addEventListener('click', (e) => {
+            e.target.closest('.admin-choice-item').remove();
+        });
+    }
+
+    function editQuestion(lang, index) {
+        const questions = langData[lang].questions;
+        const questionToEdit = questions[index];
+
+        // Fill the form
+        adminQuestionIndex.value = index;
+        adminQuestionText.value = questionToEdit.text;
+        adminQuestionWeight.value = questionToEdit.weight !== undefined ? questionToEdit.weight : 1;
+        
+        // Clear and fill choices
+        adminChoicesContainer.innerHTML = '';
+        questionToEdit.choices.forEach((choice, choiceIndex) => {
+            addChoiceField(choiceIndex, choice);
+        });
+
+        // Show the form and hide the list
+        adminQuestionList.classList.add('hidden');
+        adminQuestionForm.classList.remove('hidden');
+        adminAddQuestionBtn.classList.add('hidden'); // Hide add question button
+    }
+
+    function deleteQuestion(lang, index) {
+        if (confirm(langData[currentLang].admin?.confirmDeleteQuestion || (currentLang === 'ko' ? '정말로 이 질문을 삭제하시겠습니까?' : 'Are you sure you want to delete this question?'))) {
+            langData[lang].questions.splice(index, 1);
+            saveQuestionsToStorage({ ko: langData.ko.questions, en: langData.en.questions });
+            renderAdminQuestions(lang); // Re-render list
+            // If the deleted question was being edited, clear the form
+            if (parseInt(adminQuestionIndex.value) === index) {
+                adminQuestionForm.reset();
+                adminChoicesContainer.innerHTML = '';
+            }
+        }
+    }
+    
+    function adminAddChoice() {
+        if (adminChoicesContainer.children.length >= 4) {
+            alert(langData[currentLang].admin.choicesMaxAlert);
+            return;
+        }
+        addChoiceField();
     }
 
     // --- Language Data (questions will be loaded dynamically) ---
@@ -121,6 +276,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 facebook: "페이스북 공유",
                 saveImage: "이미지로 저장",
                 copyResult: "결과 복사"
+            },
+            admin: {
+                confirmDeleteQuestion: "정말로 이 질문을 삭제하시겠습니까?",
+                addQuestionBtn: "새 질문 추가",
+                editFormTitle: "질문 편집/추가",
+                questionTextLabel: "질문 텍스트:",
+                weightLabel: "가중치 (기본 1):",
+                choicesTitle: "선택지 (최대 4개)",
+                addChoiceBtn: "선택지 추가",
+                saveBtn: "저장",
+                cancelBtn: "취소",
+                choiceTextPlaceholder: "선택지 텍스트",
+                noQuestions: "등록된 질문이 없습니다.",
+                choicesMaxAlert: "선택지는 최대 4개까지 추가할 수 있습니다.",
+                fillAllFieldsAlert: "질문 텍스트와 하나 이상의 선택지를 입력해야 합니다."
             }
         },
         en: {
@@ -190,6 +360,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 facebook: "Share Facebook",
                 saveImage: "Save as Image",
                 copyResult: "Copy Result"
+            },
+            admin: {
+                confirmDeleteQuestion: "Are you sure you want to delete this question?",
+                addQuestionBtn: "Add New Question",
+                editFormTitle: "Edit/Add Question",
+                questionTextLabel: "Question Text:",
+                weightLabel: "Weight (default 1):",
+                choicesTitle: "Choices (max 4)",
+                addChoiceBtn: "Add Choice",
+                saveBtn: "Save",
+                cancelBtn: "Cancel",
+                choiceTextPlaceholder: "Choice Text",
+                noQuestions: "No questions registered.",
+                choicesMaxAlert: "You can add a maximum of 4 choices.",
+                fillAllFieldsAlert: "Please enter question text and at least one choice."
             }
         }
     };
@@ -206,6 +391,17 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadQuestions() {
         showLoading(); // Show loading indicator
         try {
+            // First, try to load questions from localStorage
+            const storedQuestions = loadQuestionsFromStorage();
+            if (storedQuestions) {
+                langData.ko.questions = storedQuestions.ko || [];
+                langData.en.questions = storedQuestions.en || [];
+                console.log("Questions loaded successfully from localStorage.");
+                hideLoading(); // Hide loading indicator here as we're done loading
+                return; // Exit if questions loaded from localStorage
+            }
+
+            // If not in localStorage, fetch from data/questions.json
             const response = await fetch('./data/questions.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -214,12 +410,15 @@ document.addEventListener('DOMContentLoaded', () => {
             langData.ko.questions = data.ko;
             langData.en.questions = data.en;
             console.log("Questions loaded successfully from questions.json");
+            // Optionally save fetched questions to localStorage for future use
+            saveQuestionsToStorage({ ko: data.ko, en: data.en });
+
         } catch (error) {
-            console.error("Error loading questions.json:", error);
+            console.error("Error loading questions:", error);
             // Fallback to empty questions or show an error message to the user
             langData.ko.questions = [];
             langData.en.questions = [];
-            alert("Error loading questions. Please ensure 'data/questions.json' exists and is correctly formatted.");
+            alert("Error loading questions. Please ensure 'data/questions.json' exists and is correctly formatted, or check localStorage.");
         } finally {
             hideLoading(); // Hide loading indicator regardless of success or failure
         }
@@ -298,6 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
             showQuestion(); 
         } else if (!resultScreen.classList.contains('hidden')) { // If result screen is visible, re-render it for new language
             showResult(); // Recalculate and display result with new language
+        } else if (!adminScreen.classList.contains('hidden')) { // If admin screen is visible, re-render it for new language
+            renderAdminQuestions(lang);
         }
     }
 
@@ -839,6 +1040,119 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Failed to copy text: ', err);
                 alert(currentLang === 'ko' ? "텍스트 복사에 실패했습니다." : "Failed to copy text.");
             });
+    });
+
+    // Admin screen toggle (Ctrl+M or Cmd+M)
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'm') { // Ctrl+M or Cmd+M
+            e.preventDefault(); // Prevent default browser action for Ctrl+M
+            
+            // Toggle admin screen visibility
+            if (adminScreen.classList.contains('hidden')) {
+                // Hide all other main screens
+                startScreen.classList.add('hidden');
+                testScreen.classList.add('hidden');
+                resultScreen.classList.add('hidden');
+                // Show admin screen
+                adminScreen.classList.remove('hidden');
+                // Load and render questions for admin view
+                renderAdminQuestions(currentLang); // Will create this function later
+            } else {
+                // Hide admin screen
+                adminScreen.classList.add('hidden');
+                // Show start screen again
+                startScreen.classList.remove('hidden');
+                // Potentially reset any admin form state
+            }
+        }
+    });
+
+    // Admin Screen Event Listeners
+    adminLangKoBtn.addEventListener('click', () => {
+        adminLangKoBtn.classList.add('active');
+        adminLangEnBtn.classList.remove('active');
+        renderAdminQuestions('ko');
+    });
+
+    adminLangEnBtn.addEventListener('click', () => {
+        adminLangEnBtn.classList.add('active');
+        adminLangKoBtn.classList.remove('active');
+        renderAdminQuestions('en');
+    });
+
+    adminAddQuestionBtn.addEventListener('click', () => {
+        adminQuestionForm.reset();
+        adminChoicesContainer.innerHTML = ''; // Clear choices
+        addChoiceField(); // Add one empty choice by default
+        adminQuestionIndex.value = -1; // Indicate new question
+        adminQuestionForm.classList.remove('hidden');
+        adminQuestionList.classList.add('hidden');
+        adminAddQuestionBtn.classList.add('hidden');
+    });
+
+    adminAddChoiceBtn.addEventListener('click', adminAddChoice);
+
+    adminCancelEditBtn.addEventListener('click', () => {
+        adminQuestionForm.classList.add('hidden');
+        adminQuestionList.classList.remove('hidden');
+        adminAddQuestionBtn.classList.remove('hidden');
+        adminQuestionForm.reset(); // Clear form
+        adminChoicesContainer.innerHTML = ''; // Clear choices
+    });
+
+    adminQuestionForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const questionText = adminQuestionText.value.trim();
+        const questionWeight = parseFloat(adminQuestionWeight.value);
+        const choices = [];
+
+        // Collect choices
+        Array.from(adminChoicesContainer.children).forEach(choiceItem => {
+            const textInput = choiceItem.querySelector('input[type="text"]');
+            const scoreInputs = choiceItem.querySelectorAll('input[type="number"]');
+            
+            const scores = {};
+            scoreInputs.forEach(input => {
+                scores[input.dataset.scoreType] = parseInt(input.value) || 0;
+            });
+
+            if (textInput.value.trim()) {
+                choices.push({
+                    text: textInput.value.trim(),
+                    scores: scores
+                });
+            }
+        });
+
+        if (!questionText || choices.length === 0) {
+            alert(langData[currentLang].admin.fillAllFieldsAlert);
+            return;
+        }
+
+        const newQuestion = {
+            text: questionText,
+            weight: questionWeight,
+            choices: choices
+        };
+
+        const currentAdminLang = adminLangKoBtn.classList.contains('active') ? 'ko' : 'en';
+        const index = parseInt(adminQuestionIndex.value);
+
+        if (index === -1) { // Add new question
+            langData[currentAdminLang].questions.push(newQuestion);
+        } else { // Edit existing question
+            langData[currentAdminLang].questions[index] = newQuestion;
+        }
+
+        saveQuestionsToStorage({ ko: langData.ko.questions, en: langData.en.questions });
+        renderAdminQuestions(currentAdminLang);
+        
+        adminQuestionForm.classList.add('hidden');
+        adminQuestionList.classList.remove('hidden');
+        adminAddQuestionBtn.classList.remove('hidden');
+        adminQuestionForm.reset(); // Clear form
+        adminChoicesContainer.innerHTML = ''; // Clear choices
     });
 
     // --- Ad Hiding Functionality ---

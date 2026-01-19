@@ -710,3 +710,393 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
+/* Admin Screen Styling */
+#admin-screen {
+    text-align: left;
+    padding: 2rem;
+    background-color: var(--main-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--box-shadow-medium);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+#admin-screen h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.admin-controls .lang-btn, .admin-controls .try-again-btn {
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+/* Question List */
+#admin-question-list {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--ad-border);
+    padding-top: 1.5rem;
+}
+
+.question-item {
+    background-color: var(--secondary-color-light);
+    color: var(--text-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 5px var(--box-shadow-light);
+}
+
+.question-item-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--question-text-color);
+}
+
+.question-item-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.question-item-controls button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+.question-item-controls .edit-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.question-item-controls .edit-btn:hover {
+    background-color: var(--secondary-color-light);
+    color: var(--secondary-color);
+}
+
+.question-item-controls .delete-btn {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.question-item-controls .delete-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Question Form */
+#admin-question-form {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--ad-border);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#admin-question-form h3 {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#admin-question-form label {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+#admin-question-form input[type="text"],
+#admin-question-form input[type="number"],
+#admin-question-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid var(--ad-border);
+    border-radius: 5px;
+    background-color: var(--ad-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+#admin-question-form input[type="text"]:focus,
+#admin-question-form input[type="number"]:focus,
+#admin-question-form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+#admin-question-form textarea {
+    resize: vertical;
+}
+
+#admin-choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-choice-item {
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 0.5fr) auto; /* Text, 4 scores, delete btn */
+    gap: 8px;
+    align-items: center;
+    background-color: var(--result-card-bg);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px var(--box-shadow-light);
+}
+
+.admin-choice-item input[type="text"],
+.admin-choice-item input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.admin-choice-item .remove-choice-btn {
+    background-color: #ffc107; /* Yellow for remove */
+    color: #333;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.admin-choice-item .remove-choice-btn:hover {
+    background-color: #e0a800;
+}
+
+#admin-save-question-btn, #admin-cancel-edit-btn, #admin-add-choice-btn {
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .admin-controls {
+        flex-direction: column;
+    }
+    .question-item-controls {
+        justify-content: center;
+    }
+    .admin-choice-item {
+        grid-template-columns: 1fr; /* Stack on small screens */
+    }
+}
+
+/* Admin Screen Styling */
+#admin-screen {
+    text-align: left;
+    padding: 2rem;
+    background-color: var(--main-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--box-shadow-medium);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+#admin-screen h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.admin-controls .lang-btn, .admin-controls .try-again-btn {
+    font-size: 1rem;
+    padding: 10px 15px;
+}
+
+/* Question List */
+#admin-question-list {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--ad-border);
+    padding-top: 1.5rem;
+}
+
+.question-item {
+    background-color: var(--secondary-color-light);
+    color: var(--text-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 5px var(--box-shadow-light);
+}
+
+.question-item-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--question-text-color);
+}
+
+.question-item-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.question-item-controls button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+.question-item-controls .edit-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.question-item-controls .edit-btn:hover {
+    background-color: var(--secondary-color-light);
+    color: var(--secondary-color);
+}
+
+.question-item-controls .delete-btn {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+.question-item-controls .delete-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Question Form */
+#admin-question-form {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--ad-border);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#admin-question-form h3 {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#admin-question-form label {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+#admin-question-form input[type="text"],
+#admin-question-form input[type="number"],
+#admin-question-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid var(--ad-border);
+    border-radius: 5px;
+    background-color: var(--ad-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+#admin-question-form input[type="text"]:focus,
+#admin-question-form input[type="number"]:focus,
+#admin-question-form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+#admin-question-form textarea {
+    resize: vertical;
+}
+
+#admin-choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-choice-item {
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 0.5fr) auto; /* Text, 4 scores, delete btn */
+    gap: 8px;
+    align-items: center;
+    background-color: var(--result-card-bg);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px var(--box-shadow-light);
+}
+
+.admin-choice-item input[type="text"],
+.admin-choice-item input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.admin-choice-item .remove-choice-btn {
+    background-color: #ffc107; /* Yellow for remove */
+    color: #333;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.admin-choice-item .remove-choice-btn:hover {
+    background-color: #e0a800;
+}
+
+#admin-save-question-btn, #admin-cancel-edit-btn, #admin-add-choice-btn {
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .admin-controls {
+        flex-direction: column;
+    }
+    .question-item-controls {
+        justify-content: center;
+    }
+    .admin-choice-item {
+        grid-template-columns: 1fr; /* Stack on small screens */
+    }
+}
+
