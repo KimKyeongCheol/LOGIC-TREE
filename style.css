@@ -719,7 +719,7 @@ footer {
     margin-top: 1rem;
     margin-bottom: 1rem;
     max-width: 800px;
-    width: 100%;
+    /* width: 100%;  -- REMOVED per user request to fix horizontal scroll -- */
 }
 
 #admin-screen h2 {
