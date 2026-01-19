@@ -973,6 +973,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function goToStartScreen() {
         testScreen.classList.add('hidden');
         resultScreen.classList.add('hidden');
+        adminScreen.classList.add('hidden'); // Also hide admin screen
         startScreen.classList.remove('hidden');
 
         // Reset test state
