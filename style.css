@@ -549,7 +549,7 @@ footer {
         display: flex; /* Make title group a flex container */
         align-items: center; /* Align logo and h1 vertically */
         flex-grow: 1; /* Allow the title group to take available space */
-        justify-content: center; /* Center content within the group */
+        justify-content: flex-start; /* Align content within the group to the left */
     }
 
     h1 {
