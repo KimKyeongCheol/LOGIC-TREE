@@ -628,14 +628,14 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true, // Set to true to maintain aspect ratio and prevent excessive height
                 scales: {
                     r: {
                         angleLines: {
                             display: true
                         },
                         suggestedMin: 0,
-                        suggestedMax: dynamicSuggestedMax, // Use dynamic max
+                        suggestedMax: dynamicSuggestedMax,
                         pointLabels: {
                             font: {
                                 size: 14
