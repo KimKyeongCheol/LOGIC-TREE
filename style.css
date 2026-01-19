@@ -390,17 +390,21 @@ footer {
 }
 
 .share-btn {
-    padding: 12px 20px;
+    padding: 15px 20px; /* Adjusted padding for better touch target and readability */
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 1rem; /* Increased font size for readability */
     font-weight: 600;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    justify-content: center; /* Center content within the button */
     gap: 8px;
     box-shadow: 0 2px 5px var(--box-shadow-medium);
+    flex: 1; /* Make buttons take equal width in flex container */
+    min-width: 120px; /* Ensure a minimum width for touchability */
+    max-width: 180px; /* Prevent them from becoming too wide on large screens */
 }
 
 .share-btn:hover {
@@ -477,19 +481,15 @@ footer {
 
     header {
 
-        padding: 0.8rem 1rem 1rem 1rem; /* Adjust header padding for mobile, making room for stacked controls */
+        padding: 0.5rem 1rem; /* Reduced padding for smaller header height */
 
     }
 
     h1 {
 
-        font-size: 1.8rem;
+        font-size: 1.6rem; /* Slightly reduced title size */
 
-        margin-top: 0.5rem; /* Space below controls when stacked */
-
-        text-align: center;
-
-        width: 100%; /* Take full width */
+        margin-top: 0; /* Remove top margin when header is smaller */
 
     }
 
@@ -503,7 +503,7 @@ footer {
 
         width: 100%;
 
-        margin-bottom: 0.5rem; /* Space below controls */
+        margin-bottom: 0; /* Remove margin below controls */
 
         top: auto; /* Reset top */
 
@@ -521,11 +521,13 @@ footer {
 
         order: -1; /* Place it at the top */
 
-        margin-bottom: 0.5rem; /* Space below hamburger icon */
+        margin-bottom: 0; /* Remove margin below hamburger icon */
 
-        align-self: flex-end; /* Align to the right in the header-controls */
+        align-self: center; /* Align to center in the header-controls */
 
         margin-right: 1rem; /* Padding from the right edge */
+
+        font-size: 1.8rem; /* Slightly smaller hamburger icon */
 
     }
 
@@ -677,8 +679,8 @@ footer {
 }
 
 #score-chart canvas { /* Target the canvas directly */
-    height: 300px !important; /* Fixed height for the chart */
-    max-height: 50vh !important; /* Max height relative to viewport */
+    height: auto !important; /* Allow Chart.js to manage height based on aspect ratio */
+    max-height: 40vh !important; /* Max height relative to viewport */
     width: 100% !important; /* Ensure it takes full width of its container */
 }
 
