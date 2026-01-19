@@ -71,7 +71,7 @@ header {
 .header-controls {
     position: absolute;
     top: 1rem;
-    right: 1rem;
+    right: 3rem; /* Modified as requested */
     display: flex; /* Use flexbox for horizontal arrangement */
     gap: 8px; /* Space between control groups */
     align-items: center;
