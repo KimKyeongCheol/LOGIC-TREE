@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const retryBtn = document.getElementById('retry-btn');
     const mainH1 = document.querySelector('h1');
     const saveImageBtn = document.getElementById('save-image-btn');
+    const copyResultBtn = document.getElementById('copy-result-btn');
 
     const questionText = document.getElementById('question-text');
     const answerButtons = document.getElementById('answer-buttons');
@@ -102,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 kakao: "카카오톡 공유",
                 twitter: "트위터 공유",
                 facebook: "페이스북 공유",
-                saveImage: "이미지로 저장"
+                saveImage: "이미지로 저장",
+                copyResult: "결과 복사"
             }
         },
         en: {
@@ -170,7 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 kakao: "Share KakaoTalk",
                 twitter: "Share Twitter",
                 facebook: "Share Facebook",
-                saveImage: "Save as Image"
+                saveImage: "Save as Image",
+                copyResult: "Copy Result"
             }
         }
     };
@@ -245,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('share-twitter').innerText = data.shareButtons.twitter;
             document.getElementById('share-facebook').innerText = data.shareButtons.facebook;
             document.getElementById('save-image-btn').innerText = data.shareButtons.saveImage;
+            document.getElementById('copy-result-btn').innerText = data.shareButtons.copyResult;
         }
 
         // Update active language button
@@ -798,6 +802,20 @@ document.addEventListener('DOMContentLoaded', () => {
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
+    });
+
+    // Add Event Listener for Copy Result Button
+    copyResultBtn.addEventListener('click', () => {
+        if (!lastCalculatedResult) return; // Ensure there's a result to copy
+        const textToCopy = decodeURIComponent(getShareText()); // Decode URL-encoded text for clipboard
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                alert(currentLang === 'ko' ? "결과 텍스트가 클립보드에 복사되었습니다!" : "Result text copied to clipboard!");
+            })
+            .catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert(currentLang === 'ko' ? "텍스트 복사에 실패했습니다." : "Failed to copy text.");
+            });
     });
 
     // --- Ad Hiding Functionality ---
