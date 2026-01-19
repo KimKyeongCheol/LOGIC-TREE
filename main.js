@@ -866,8 +866,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Consider alerting the user or disabling start button if no questions can be loaded
         }
         hideEmptyAdContainers();
+        // Explicitly show the start screen after initial loading is complete
+        startScreen.classList.remove('hidden');
     }).catch(error => {
         console.error("An error occurred during initial load sequence:", error);
         alert("Failed to load necessary application data. Please ensure the 'data/questions.json' file is accessible and properly formatted, and try running with a local web server.");
+        // Even if there's an error, hide loading and attempt to show start screen
+        startScreen.classList.remove('hidden');
     });
 });
