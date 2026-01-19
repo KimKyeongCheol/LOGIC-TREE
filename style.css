@@ -59,27 +59,43 @@ body {
 
 header {
     background-color: var(--header-bg);
-    padding: 1rem 2rem; /* Restore original padding for header */
+    padding: 1rem 2rem;
     text-align: center;
     width: 100%;
     box-shadow: 0 4px 10px var(--box-shadow-light);
     margin-bottom: 1rem;
-    position: relative; /* Keep relative for absolute controls */
+    position: relative; /* Keep relative for absolute children */
+    display: flex;
+    flex-direction: column; /* Default to stacking on desktop (main heading, then controls) */
+    align-items: center;
 }
 
-/* Header Controls Styling */
-.header-controls {
-    position: relative; /* Changed to relative to contain absolute positioned mobile menu */
+h1 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 2.5rem; /* Revert to original desktop size */
+    font-weight: 700;
+    padding: 0.5rem 0;
+}
+
+/* Desktop Header Controls */
+#desktop-header-controls {
+    position: absolute; /* Position in top-right corner of the header */
     top: 1rem;
     right: 3rem;
-    display: flex;
-    gap: 8px;
-    align-items: center;
+    display: flex; /* Display as flex for desktop */
+    gap: 8px; /* Maintain gap between control groups */
+    align-items: center; /* Vertically align items */
+}
+
+/* Mobile Header Top Bar (h1 + hamburger) - hidden by default on desktop */
+#mobile-header-top-bar {
+    display: none; /* Hidden by default on desktop */
 }
 
 /* Hamburger menu button - hidden by default for desktop */
 #hamburger-menu-btn {
-    display: none; /* Hidden by default */
+    display: none; /* Hidden by default on desktop */
     background: none;
     border: none;
     font-size: 2rem;
@@ -89,20 +105,60 @@ header {
     z-index: 1001; /* Ensure it's above other content */
 }
 
-/* Mobile menu container - desktop state */
-#mobile-menu-container {
-    display: flex; /* Display as flex for desktop */
-    gap: 8px; /* Maintain gap between control groups */
+/* Mobile Overlay Menu - hidden by default on desktop */
+#mobile-menu-overlay {
+    display: none; /* Hidden by default on desktop */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg);
+    z-index: 999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
 }
 
-/* General styling for control groups */
-#navigation-controls,
-#language-switcher,
-#theme-switcher {
+#mobile-menu-overlay.is-open {
     display: flex;
-    border-radius: 6px;
-    overflow: hidden; /* For rounded corners on contained buttons */
-    border: 1px solid var(--ad-border);
+    transform: translateX(0);
+}
+
+
+#mobile-menu-overlay #navigation-controls-mobile,
+#mobile-menu-overlay #language-switcher-mobile,
+#mobile-menu-overlay #theme-switcher-mobile {
+    flex-direction: column; /* Stack controls inside the menu */
+    border: none; /* Remove border from individual controls inside menu */
+    border-radius: 0; /* Remove border-radius */
+    width: 80%; /* Take more width inside menu */
+    max-width: 250px;
+}
+
+#mobile-menu-overlay .lang-btn,
+#mobile-menu-overlay .theme-btn,
+#mobile-menu-overlay #go-to-start-btn-mobile {
+    padding: 15px 20px; /* Larger touch targets */
+    font-size: 1.1rem;
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width */
+    border-radius: 8px; /* Rounded corners for individual buttons */
+    margin-bottom: 5px; /* Space between items */
+}
+
+#mobile-menu-overlay .lang-btn:last-child,
+#mobile-menu-overlay .theme-btn:last-child,
+#mobile-menu-overlay #go-to-start-btn-mobile:last-child {
+    margin-bottom: 0;
+}
+
+#mobile-menu-overlay #language-switcher-mobile .lang-btn:first-child,
+#mobile-menu-overlay #language-switcher-mobile .lang-btn:last-child {
+    border-radius: 8px; /* Apply border-radius to each language button within the menu */
 }
 
 /* Styling for the new Home button */
@@ -478,166 +534,157 @@ footer {
 /* Mobile styles */
 
 @media (max-width: 768px) {
-
     header {
-
-        padding: 0.5rem 1rem; /* Reduced padding for smaller header height */
-
+        padding: 0; /* Header padding controlled by children on mobile */
+        flex-direction: column; /* Ensure main header content and overlay are stacked */
+        align-items: center;
+    }
+    
+    h1 { /* Global h1 will be overridden by #mobile-header-top-bar h1 */
+        font-size: 1.6rem; /* Default mobile H1 size, will be overridden */
+        margin-top: 0;
+        padding: 0;
     }
 
-    h1 {
-
-        font-size: 1.6rem; /* Slightly reduced title size */
-
-        margin-top: 0; /* Remove top margin when header is smaller */
-
+    #desktop-header-controls {
+        display: none; /* Hide desktop controls on mobile */
     }
 
-    .header-controls {
-
-        flex-direction: column; /* Stack controls vertically on larger mobile screens as well */
-
-        position: static; /* Remove absolute positioning on mobile */
-
-        justify-content: center;
-
+    #mobile-header-top-bar {
+        display: flex; /* Show mobile top bar */
+        justify-content: space-between; /* Space out title and hamburger */
+        align-items: center;
         width: 100%;
+        padding: 0.3rem 0.8rem; /* Further reduced padding for mobile header height */
+        box-shadow: 0 2px 5px var(--box-shadow-light); /* Lighter shadow for mobile header */
+        background-color: var(--header-bg); /* Use header background */
+        position: sticky; /* Keep top bar visible when scrolling */
+        top: 0;
+        z-index: 100; /* Ensure it's above content */
+    }
 
-        margin-bottom: 0; /* Remove margin below controls */
-
-        top: auto; /* Reset top */
-
-        right: auto; /* Reset right */
-
-        gap: 0; /* Remove gap from main header-controls on mobile */
-
-        align-items: center; /* Center horizontally */
-
+    #mobile-header-top-bar h1 {
+        font-size: 1.4rem; /* Reduced title size within mobile top bar */
+        margin: 0; /* Remove margin */
+        padding: 0; /* Remove padding */
+        flex-grow: 1; /* Allow h1 to take available space */
+        text-align: left; /* Align title to the left */
     }
 
     #hamburger-menu-btn {
-
         display: block; /* Show hamburger button on mobile */
-
-        order: -1; /* Place it at the top */
-
-        margin-bottom: 0; /* Remove margin below hamburger icon */
-
-        align-self: center; /* Align to center in the header-controls */
-
-        margin-right: 1rem; /* Padding from the right edge */
-
-        font-size: 1.8rem; /* Slightly smaller hamburger icon */
-
+        font-size: 1.6rem; /* Reduced hamburger icon size */
+        margin-right: 0; /* Adjust margin if needed */
+        align-self: center; /* Center vertically within flex container */
+        order: 1; /* Place it after h1 */
     }
 
+    /* Existing nested media query for very small screens */
+    @media (max-width: 480px) {
+        #mobile-header-top-bar h1 {
+            font-size: 1.3rem; /* Even smaller title on very small screens */
+        }
+        #hamburger-menu-btn {
+            font-size: 1.5rem; /* Even smaller hamburger icon */
+        }
+        main {
+            padding: 0.8rem 0.5rem; /* Even more reduced padding for main */
+        }
+        #start-screen h2 {
+            font-size: 1.4rem; /* Smaller h2 */
+        }
+        #start-screen p {
+            font-size: 0.9rem; /* Smaller paragraph */
+        }
+        #question-text {
+            font-size: 1.2rem; /* Smaller question text */
+        }
+        .answer-btn {
+            padding: 8px 10px; /* Smaller padding for smaller buttons */
+            font-size: 0.9rem; /* Smaller answer button font */
+        }
+        #result-screen h2 {
+            font-size: 1.2rem;
+        }
+        .result-message {
+            font-size: 1.6rem; /* Smaller result message */
+        }
+        #result-description {
+            font-size: 0.8rem; /* Smaller result description */
+        }
+        .pagination-btn {
+            padding: 5px 8px; /* Smaller padding for pagination buttons */
+            font-size: 0.75rem;
+            min-width: 28px;
+        }
+        .admin-controls {
+            gap: 6px; /* Smaller gap */
+        }
+        #admin-question-form {
+            gap: 8px; /* Smaller gap */
+        }
+        #admin-question-form h3 {
+            font-size: 1.2rem;
+        }
+        #admin-question-form label {
+            font-size: 0.8rem;
+        }
+        .dual-language-field {
+            gap: 6px;
+        }
+        .admin-choice-item {
+            padding: 8px;
+            gap: 6px;
+        }
+        .score-inputs-wrapper {
+            gap: 8px;
+        }
+        .score-input-group input[type="number"] {
+            width: 35px;
+            padding: 2px;
+            font-size: 0.7rem;
+        }
+    }
 
+    /* Old header-controls styling is removed/overridden as structure changed */
+    .header-controls {
+        display: none; /* Hide the old header-controls div on mobile completely */
+    }
 
-    #mobile-menu-container {
-
-        display: none; /* Hide mobile menu by default */
-
-        position: fixed;
-
-        top: 0;
-
-        left: 0;
-
-        width: 100%;
-
-        height: 100%;
-
-        background-color: var(--main-bg); /* Use main background for menu */
-
-        z-index: 999; /* Below loading indicator, above everything else */
-
+    /* Adjusting controls inside the mobile overlay menu */
+    #mobile-menu-overlay #navigation-controls-mobile,
+    #mobile-menu-overlay #language-switcher-mobile,
+    #mobile-menu-overlay #theme-switcher-mobile {
         flex-direction: column;
-
-        justify-content: center;
-
-        align-items: center;
-
-        gap: 20px; /* Space between menu items */
-
-        transition: transform 0.3s ease-in-out;
-
-        transform: translateX(100%); /* Start off-screen to the right */
-
-    }
-
-
-
-    #mobile-menu-container.is-open {
-
-        display: flex; /* Show when open */
-
-        transform: translateX(0); /* Slide in */
-
-    }
-
-
-
-    #mobile-menu-container #navigation-controls,
-
-    #mobile-menu-container #language-switcher,
-
-    #mobile-menu-container #theme-switcher {
-
-        flex-direction: column; /* Stack controls inside the menu */
-
-        border: none; /* Remove border from individual controls inside menu */
-
-        border-radius: 0; /* Remove border-radius */
-
-        width: 80%; /* Take more width inside menu */
-
+        border: none;
+        border-radius: 0;
+        width: 80%;
         max-width: 250px;
-
+        gap: 8px; /* Added gap between internal controls */
     }
 
-
-
-    #mobile-menu-container .lang-btn,
-
-    #mobile-menu-container .theme-btn,
-
-    #mobile-menu-container #go-to-start-btn {
-
-        padding: 15px 20px; /* Larger touch targets */
-
-        font-size: 1.1rem;
-
+    #mobile-menu-overlay .lang-btn,
+    #mobile-menu-overlay .theme-btn,
+    #mobile-menu-overlay #go-to-start-btn-mobile {
+        padding: 12px 15px; /* Slightly smaller touch targets for menu items */
+        font-size: 1rem; /* Slightly smaller font for menu items */
         width: 100%;
-
-        box-sizing: border-box; /* Include padding in width */
-
-        border-radius: 8px; /* Rounded corners for individual buttons */
-
-        margin-bottom: 5px; /* Space between items */
-
+        box-sizing: border-box;
+        border-radius: 8px;
+        margin-bottom: 5px;
     }
 
-
-
-    #mobile-menu-container .lang-btn:last-child,
-
-    #mobile-menu-container .theme-btn:last-child,
-
-    #mobile-menu-container #go-to-start-btn:last-child {
-
+    #mobile-menu-overlay .lang-btn:last-child,
+    #mobile-menu-overlay .theme-btn:last-child,
+    #mobile-menu-overlay #go-to-start-btn-mobile:last-child {
         margin-bottom: 0;
-
     }
 
-
-
-    #mobile-menu-container #language-switcher .lang-btn:first-child,
-
-    #mobile-menu-container #language-switcher .lang-btn:last-child {
-
+    #mobile-menu-overlay #language-switcher-mobile .lang-btn:first-child,
+    #mobile-menu-overlay #language-switcher-mobile .lang-btn:last-child {
         border-radius: 8px; /* Apply border-radius to each language button within the menu */
-
-    }/* Secondary Results Styling */
+    }
+}/* Secondary Results Styling */
 #secondary-results {
     margin-top: 2rem;
     padding-top: 1.5rem;

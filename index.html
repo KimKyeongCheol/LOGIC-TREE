@@ -9,22 +9,35 @@
 <body>
     <header>
         <div class="ad-top"></div>
-        <div class="header-controls">
+        <div id="mobile-header-top-bar">
+            <h1>LOGIC-TREE</h1>
             <button id="hamburger-menu-btn" class="menu-icon">☰</button> <!-- Hamburger icon -->
-            <div id="mobile-menu-container" class="header-controls-group">
-                <div id="navigation-controls">
-                    <button id="go-to-start-btn" class="nav-btn">🏠</button>
-                </div>
-                <div id="language-switcher">
-                    <button id="lang-ko" class="lang-btn active">한국어</button>
-                    <button id="lang-en" class="lang-btn">English</button>
-                </div>
-                <div id="theme-switcher">
-                    <button id="theme-toggle" class="theme-btn">☀️</button> <!-- Light mode by default -->
-                </div>
+        </div>
+        <div id="desktop-header-controls">
+            <div id="navigation-controls">
+                <button id="go-to-start-btn" class="nav-btn">🏠</button>
+            </div>
+            <div id="language-switcher">
+                <button id="lang-ko" class="lang-btn active">한국어</button>
+                <button id="lang-en" class="lang-btn">English</button>
+            </div>
+            <div id="theme-switcher">
+                <button id="theme-toggle" class="theme-btn">☀️</button> <!-- Light mode by default -->
             </div>
         </div>
-        <h1>LOGIC-TREE</h1>
+        <!-- Mobile Overlay Menu (duplicates desktop controls for full-screen overlay) -->
+        <div id="mobile-menu-overlay">
+            <div id="navigation-controls-mobile">
+                <button id="go-to-start-btn-mobile" class="nav-btn">🏠</button>
+            </div>
+            <div id="language-switcher-mobile">
+                <button id="lang-ko-mobile" class="lang-btn active">한국어</button>
+                <button id="lang-en-mobile" class="lang-btn">English</button>
+            </div>
+            <div id="theme-switcher-mobile">
+                <button id="theme-toggle-mobile" class="theme-btn">☀️</button> <!-- Light mode by default -->
+            </div>
+        </div>
     </header>
     <div class="container">
         <aside class="ad-side-left"></aside>

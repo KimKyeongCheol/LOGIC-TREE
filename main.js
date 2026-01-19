@@ -31,8 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingIndicator = document.getElementById('loading-indicator'); // Get reference to loading indicator
 
     const hamburgerMenuBtn = document.getElementById('hamburger-menu-btn'); // Hamburger button
-    const mobileMenuContainer = document.getElementById('mobile-menu-container'); // Mobile menu container
+    const desktopHeaderControls = document.getElementById('desktop-header-controls'); // Desktop menu container
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay'); // Mobile full-screen menu overlay
 
+    // Mobile specific controls (inside mobileMenuOverlay)
+    const goHomeBtnMobile = document.getElementById('go-to-start-btn-mobile');
+    const langKoBtnMobile = document.getElementById('lang-ko-mobile');
+    const langEnBtnMobile = document.getElementById('lang-en-mobile');
+    const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
 
     const adminScreen = document.getElementById('admin-screen');
     // const adminLangKoBtn = document.getElementById('admin-lang-ko'); // Removed as this element does not exist
@@ -668,13 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Update active language button, considering it might be inside the mobile menu
-        document.querySelectorAll('#language-switcher .lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('#language-switcher .lang-btn, #language-switcher-mobile .lang-btn').forEach(btn => btn.classList.remove('active'));
         if (lang === 'ko') {
             document.getElementById('lang-ko').classList.add('active');
+            document.getElementById('lang-ko-mobile').classList.add('active');
         } else if (lang === 'en') {
             document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-en-mobile').classList.add('active');
         }
-        mobileMenuContainer.classList.remove('is-open'); // Close mobile menu if open
+        mobileMenuOverlay.classList.remove('is-open'); // Close mobile menu if open
     }
 
     function switchLanguage(lang) {
@@ -704,6 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-mode');
         const isDarkMode = body.classList.contains('dark-mode');
         themeToggleBtn.innerText = isDarkMode ? '🌙' : '☀️';
+        themeToggleBtnMobile.innerText = isDarkMode ? '🌙' : '☀️'; // Update mobile theme button
         localStorage.setItem('logicTreeTheme', isDarkMode ? 'dark' : 'light');
     }
 
@@ -720,9 +729,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedTheme === 'dark') {
             body.classList.add('dark-mode');
             themeToggleBtn.innerText = '🌙';
+            themeToggleBtnMobile.innerText = '🌙'; // Set mobile theme button
         } else {
             body.classList.remove('dark-mode');
             themeToggleBtn.innerText = '☀️';
+            themeToggleBtnMobile.innerText = '☀️'; // Set mobile theme button
         }
         updateUI(currentLang);
     }
@@ -762,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultScreen.classList.remove('result-logic', 'result-chaos', 'result-order', 'result-emotion');
         testScreen.classList.remove('hidden');
         showQuestion();
-        mobileMenuContainer.classList.remove('is-open'); // Close mobile menu when test starts
+        mobileMenuOverlay.classList.remove('is-open'); // Close mobile menu when test starts
     }
 
     function showQuestion() {
@@ -1070,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('share-buttons').classList.remove('hidden'); // Ensure share buttons are visible
 
         drawScoreChart(fullResult.rawScores); // Draw the score chart
-        mobileMenuContainer.classList.remove('is-open'); // Close mobile menu when result is shown
+        mobileMenuOverlay.classList.remove('is-open'); // Close mobile menu when result is shown
     }
     
     function restartTest() {
@@ -1083,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
       callToActionDiv.classList.add('hidden');
       document.getElementById('high-score-insight').classList.add('hidden'); // Hide new div
       document.getElementById('low-score-advice').classList.add('hidden');   // Hide new div
-      mobileMenuContainer.classList.remove('is-open'); // Close mobile menu when restarting test
+      mobileMenuOverlay.classList.remove('is-open'); // Close mobile menu when restarting test
     }
 
     // New function to draw the score chart
@@ -1203,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         callToActionDiv.classList.add('hidden');
         document.getElementById('high-score-insight').classList.add('hidden'); // Hide new div
         document.getElementById('low-score-advice').classList.add('hidden');   // Hide new div
-        mobileMenuContainer.classList.remove('is-open'); // Close mobile menu when going to start screen
+        mobileMenuOverlay.classList.remove('is-open'); // Close mobile menu when going to start screen
     }
 
     // --- Event Listeners ---
@@ -1217,8 +1228,14 @@ document.addEventListener('DOMContentLoaded', () => {
     shareTwitterBtn.addEventListener('click', shareTwitter);
     shareFacebookBtn.addEventListener('click', shareFacebook);
     hamburgerMenuBtn.addEventListener('click', () => {
-        mobileMenuContainer.classList.toggle('is-open');
+        mobileMenuOverlay.classList.toggle('is-open');
     });
+
+    // Mobile menu specific listeners
+    goHomeBtnMobile.addEventListener('click', () => { goToStartScreen(); mobileMenuOverlay.classList.remove('is-open'); });
+    langKoBtnMobile.addEventListener('click', () => { switchLanguage('ko'); mobileMenuOverlay.classList.remove('is-open'); });
+    langEnBtnMobile.addEventListener('click', () => { switchLanguage('en'); mobileMenuOverlay.classList.remove('is-open'); });
+    themeToggleBtnMobile.addEventListener('click', () => { toggleTheme(); mobileMenuOverlay.classList.remove('is-open'); });
     // Event listener for the new "Save as Image" button
     saveImageBtn.addEventListener('click', () => {
         const resultScreenElement = document.getElementById('result-screen');
