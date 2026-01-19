@@ -204,6 +204,7 @@ main {
     width: 100%;
     max-width: 700px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    overflow-y: auto; /* Add scrollbar to main content if it overflows */
 }
 
 footer {
