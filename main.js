@@ -478,31 +478,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getShareText() {
         const primaryTitle = lastCalculatedResult.primary.title;
-        // const primaryDescription = lastCalculatedResult.primary.description; // Not needed if we're using snippets
         const siteUrl = window.location.href;
 
-        // Get the high score insight and low score advice directly from the stored lastCalculatedResult
         const highScoreInsight = lastCalculatedResult.primary.highScoreSnippet;
         let lowScoreAdvice = '';
         if (lastCalculatedResult.lowestScoreTypeKey && langData[currentLang].results[lastCalculatedResult.lowestScoreTypeKey]) {
             lowScoreAdvice = langData[currentLang].results[lastCalculatedResult.lowestScoreTypeKey].lowScoreSnippet;
         }
+        const humorousInsight = lastCalculatedResult.primary.humorousInsight; // Get humorous insight
 
         let shareText = `${langData[currentLang].appTitle} ${langData[currentLang].resultScreen.h2}\n${primaryTitle}\n\n`;
 
-        // Always prioritize highScoreInsight if available
         if (highScoreInsight) {
             shareText += `${highScoreInsight}\n\n`;
-        } 
-        // If highScoreInsight is not available, then it will just be empty from this block.
-        // The expectation for combinatorial text is that these snippets are provided.
+        }
 
         if (lowScoreAdvice) {
             shareText += `${lowScoreAdvice}\n\n`;
         }
         
-        // Explicitly removed shortSummary and humorousInsight from getShareText based on user's combinatorial request.
-        // These are assumed to be integrated into the high/low snippets or primary description if desired.
+        // Add humorousInsight back if it exists
+        if (humorousInsight) {
+            shareText += `${humorousInsight}\n\n`;
+        }
 
         if (lastCalculatedResult.secondary && lastCalculatedResult.secondary.length > 0) {
             shareText += currentLang === 'ko' ? "또한, 당신은 다음과 같은 성향을 보입니다:\n" : "Additionally, you show tendencies towards:\n";
@@ -510,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 shareText += ` - ${secondary.data.title}\n`;
             });
         }
-        shareText += siteUrl; // Add the URL to the share text
+        shareText += siteUrl;
         return encodeURIComponent(shareText);
     }
 
