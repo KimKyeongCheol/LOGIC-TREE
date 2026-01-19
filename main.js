@@ -102,9 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Create a copy and sort questions by ID before rendering
 
-            const allQuestionsKo = [...langData.ko.questions].sort((a, b) => a.id - b.id);
+            const allQuestionsKo = [...langData.ko.questions].sort((a, b) => b.id - a.id);
 
-            const allQuestionsEn = [...langData.en.questions].sort((a, b) => a.id - b.id); // Assuming parallel IDs
+            const allQuestionsEn = [...langData.en.questions].sort((a, b) => b.id - a.id); // Assuming parallel IDs
 
     
 
@@ -304,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adminQuestionList.classList.add('hidden');
         adminQuestionForm.classList.remove('hidden');
         adminAddQuestionBtn.classList.add('hidden'); // Hide add question button
+        adminPaginationControls.classList.add('hidden'); // Hide pagination controls
     }
 
     function deleteQuestion(index) { // Removed lang parameter
@@ -339,6 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return button;
         };
 
+        // First button
+        adminPaginationControls.appendChild(createButton('맨 앞', 1, currentPageAdmin === 1));
         // Previous button
         adminPaginationControls.appendChild(createButton('이전', currentPageAdmin - 1, currentPageAdmin === 1));
 
@@ -362,6 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Next button
         adminPaginationControls.appendChild(createButton('다음', currentPageAdmin + 1, currentPageAdmin === totalPages));
+        // Last button
+        adminPaginationControls.appendChild(createButton('맨 끝', totalPages, currentPageAdmin === totalPages));
     }
 
     function goToAdminPage(page) {
@@ -1278,6 +1283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adminQuestionForm.classList.remove('hidden');
         adminQuestionList.classList.add('hidden');
         adminAddQuestionBtn.classList.add('hidden');
+        adminPaginationControls.classList.add('hidden'); // Hide pagination controls
     });
 
     adminCancelEditBtn.addEventListener('click', () => {
@@ -1289,6 +1295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adminQuestionTextEn.value = ''; // Explicitly clear
         adminQuestionWeight.value = '1'; // Reset weight to default
         adminChoicesContainer.innerHTML = ''; // Clear choices
+        adminPaginationControls.classList.remove('hidden'); // Show pagination controls
     });
 
     adminQuestionForm.addEventListener('submit', (e) => {
@@ -1363,6 +1370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adminQuestionForm.classList.add('hidden');
         adminQuestionList.classList.remove('hidden');
         adminAddQuestionBtn.classList.remove('hidden');
+        adminPaginationControls.classList.remove('hidden'); // Show pagination controls
         // Reset form fields
         adminQuestionTextKo.value = '';
         adminQuestionTextEn.value = '';
