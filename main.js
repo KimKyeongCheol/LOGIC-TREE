@@ -469,7 +469,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 startTestError: "테스트를 시작할 수 없습니다. 질문이 충분히 로드되지 않았습니다.",
                 kakaoShareAlert: "카카오톡 공유 기능은 현재 개발 중입니다.",
                 copySuccess: "결과 텍스트가 클립보드에 복사되었습니다!",
-                copyError: "텍스트 복사에 실패했습니다."
+                copyError: "텍스트 복사에 실패했습니다.",
+                weightRangeError: "가중치는 0.1에서 3 사이의 값만 입력할 수 있습니다."
             }
         },
         en: {
@@ -561,7 +562,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 startTestError: "Could not start test. Not enough questions have been loaded.",
                 kakaoShareAlert: "KakaoTalk sharing is currently under development.",
                 copySuccess: "Result text copied to clipboard!",
-                copyError: "Failed to copy text."
+                copyError: "Failed to copy text.",
+                weightRangeError: "Weight must be between 0.1 and 3."
             }
         }
     };
@@ -1295,6 +1297,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const questionTextKo = adminQuestionTextKo.value.trim();
         const questionTextEn = adminQuestionTextEn.value.trim();
         const questionWeight = parseFloat(adminQuestionWeight.value);
+
+        // Add validation for questionWeight range (0.1 to 3)
+        if (questionWeight < 0.1 || questionWeight > 3) {
+            alert(langData[currentLang].admin?.alerts?.weightRangeError || (currentLang === 'ko' ? '가중치는 0.1에서 3 사이의 값만 입력할 수 있습니다.' : 'Weight must be between 0.1 and 3.'));
+            return; // Prevent form submission
+        }
 
         const choicesKo = [];
         const choicesEn = [];
