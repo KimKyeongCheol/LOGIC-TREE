@@ -410,47 +410,47 @@ document.addEventListener('DOMContentLoaded', () => {
             results: {
                 LOGIC_MASTER: {
                     title: "논리주의 분석가 🧠",
-                    description: "당신은 감정이나 불확실성에 휘둘리지 않고, 오직 데이터와 명확한 사실에 근거하여 판단하는 냉철한 마인드의 소유자입니다. 모든 상황을 객관적으로 파악하고 가장 효율적이며 합리적인 해결책을 찾아내는 데 탁월한 능력을 발휘합니다.",
-                    shortSummary: "데이터와 논리로 무장한 당신, 감성은 잠시 접어두세요! 숫자가 당신의 언어이고, 팩트만이 진실입니다. 복잡한 문제를 명쾌하게 풀어내는 당신은, 마치 살아있는 계산기같네요!",
-                    humorousInsight: "당신에게 '직감'이란, 아직 데이터로 증명되지 않은 '가설'일 뿐! 😂 사랑도, 우정도, 효율성이 우선인 당신, 가끔은 머리 말고 가슴이 시키는 일을 해보는 건 어때요?",
-                    callToAction: "당신의 비범한 논리력을 세상에 보여주세요! 이 결과를 공유하고, 친구들의 마인드 유형도 분석해보세요!",
+                    description: "당신은 모든 것을 데이터와 명확한 사실에 근거하여 판단하는, 감정에 흔들리지 않는 냉철한 분석가입니다. 복잡한 상황에서도 핵심을 꿰뚫어 보고, 가장 효율적이고 합리적인 해결책을 도출하는 데에 매우 뛰어난 재능을 가지고 있습니다. 당신의 판단은 감성적인 고려보다는 객관적인 지표와 검증된 이론에 기반합니다.",
+                    shortSummary: "데이터와 논리로 세상을 해석하는 당신! 감성은 잠시 접어두세요. 숫자가 당신의 언어이며, 검증된 사실만이 당신의 진실입니다. 복잡한 문제를 명쾌하게 풀어내는 당신은, 마치 잘 튜닝된 분석 엔진과 같습니다.",
+                    humorousInsight: "당신에게 '직감'이란, 아직 데이터로 증명되지 않은 '통계적 가능성'일 뿐! 😂 사랑이나 우정 같은 추상적인 가치도 효율성의 렌즈로 분석하곤 하죠. 가끔은 계산기를 내려놓고 마음의 소리에 귀 기울여보는 건 어떨까요?",
+                    callToAction: "당신의 비범한 논리력과 통찰력을 세상에 증명하세요! 이 결과를 친구들과 공유하고, 그들의 숨겨진 마인드 유형도 함께 분석해보세요!",
                     icon: "🧠",
                     className: "result-logic",
-                    highScoreSnippet: "당신의 가장 큰 강점은 뛰어난 논리력입니다. 복잡한 문제를 명확하게 분석하고 합리적인 해결책을 찾아내는 데 탁월합니다. 데이터와 사실에 기반한 당신의 판단은 항상 믿을 수 있습니다.",
-                    lowScoreSnippet: "때로는 차가운 논리만으로는 해결하기 어려운 상황들이 있습니다. 감정적 교류나 창의적 접근을 시도하며, 다른 사람들의 감정적 반응에도 귀 기울여 보세요. 이는 당신의 시야를 넓히는 데 도움이 될 것입니다."
+                    highScoreSnippet: "당신의 가장 두드러진 강점은 바로 뛰어난 논리력과 분석적 사고입니다. 어떤 문제든 감정적인 동요 없이 객관적으로 분석하여, 데이터에 기반한 합리적인 해결책을 찾아내는 데 탁월합니다. 당신의 결정은 높은 신뢰도를 자랑합니다.",
+                    lowScoreSnippet: "때로는 차가운 논리만으로 해결하기 어려운 인간적인 문제들이 있습니다. 다른 사람들의 감정적 반응에 공감하고, 창의적이거나 비정형적인 접근을 시도해 보세요. 이는 당신의 의사결정 모델을 한층 더 발전시키는 데 도움이 될 것입니다."
                 },
                 CHAOTIC_AGENT: {
                     title: "혼돈의 에이전트 🌪️",
-                    description: "당신은 예측 불가능한 에너지와 창의력으로 가득 찬 마인드입니다. 정해진 규칙이나 틀에 얽매이는 것을 싫어하며, 즉흥적이고 자유로운 방식으로 새로운 가능성을 탐색합니다. 당신의 행동은 때로는 혼란을 야기하지만, 그 속에서 혁신적인 아이디어가 탄생하곤 합니다.",
-                    shortSummary: "규칙? 그게 뭔가요? 먹는 건가요? 😋 당신은 예측 불가능한 매력으로 가득 찬, 톡톡 튀는 아이디어 뱅크! 정해진 틀을 깨부수고 새로운 길을 개척하는 진정한 혁신가입니다.",
-                    humorousInsight: "당신의 가방 속은 마치 우주와 같죠? 어디서 뭐가 튀어나올지 아무도 모릅니다! 계획은 즉흥적으로 세워야 제맛이라는 당신, 예상치 못한 곳에서 인생의 해답을 찾기도 합니다.",
-                    callToAction: "세상은 당신의 혼돈을 기다립니다! 당신의 독특한 마인드 유형을 공유하고, 친구들에게 신선한 충격을 선사하세요!",
+                    description: "당신은 예측 불가능한 에너지와 무한한 창의력으로 가득 찬 자유로운 영혼입니다. 정해진 규칙이나 틀에 얽매이는 것을 답답해하며, 즉흥적이고 유연한 사고방식으로 누구도 생각지 못한 새로운 가능성을 탐색합니다. 당신의 행보는 때로 혼란을 야기하는 것처럼 보이지만, 그 속에서 기존의 질서를 뛰어넘는 혁신적인 아이디어가 탄생합니다.",
+                    shortSummary: "규칙이요? 그런 건 누가 만들었죠? 😋 당신은 예측 불가능한 매력으로 가득 찬, 살아있는 아이디어 발전소입니다. 정해진 길을 거부하고 새로운 길을 개척하는 당신은 진정한 의미의 혁신가입니다.",
+                    humorousInsight: "당신의 머릿속은 아이디어로 가득 찬 빅뱅 우주와 같군요. 어디서 무엇이 터져 나올지 아무도 예상할 수 없습니다! '계획은 원래 즉흥적으로 세우는 것'이라는 당신, 덕분에 인생이 지루할 틈이 없겠네요.",
+                    callToAction: "세상은 당신의 창의적인 혼돈을 필요로 합니다! 당신의 독특한 마인드를 공유하고, 친구들에게 신선한 영감과 충격을 선사하세요!",
                     icon: "🌪️",
                     className: "result-chaos",
-                    highScoreSnippet: "당신은 예측 불가능한 에너지와 창의력으로 가득 차 있습니다. 정해진 틀에 얽매이지 않고 새로운 아이디어를 끊임없이 탐색하며, 변화를 두려워하지 않는 혁신가적인 면모가 강점입니다.",
-                    lowScoreSnippet: "가끔은 당신의 자유로운 에너지가 주변에 혼란을 주거나, 중요한 세부 사항을 놓치게 만들 수도 있습니다. 때때로 계획을 세우고, 질서 있는 환경에서 안정감을 찾는 연습을 해보는 것은 어떨까요?"
+                    highScoreSnippet: "당신의 가장 큰 잠재력은 정해진 틀에 얽매이지 않는 창의성과 변화를 두려워하지 않는 혁신적인 태도에 있습니다. 남들이 보지 못하는 새로운 기회를 포착하고, 과감하게 도전하는 당신의 모습은 주변에 신선한 자극을 줍니다.",
+                    lowScoreSnippet: "당신의 자유로운 에너지가 때로는 중요한 세부사항을 놓치게 만들거나, 체계적인 접근이 필요한 상황에서 어려움을 겪게 할 수 있습니다. 목표 달성을 위해 때로는 계획을 세우고, 질서의 가치를 활용하는 지혜가 필요합니다."
                 },
                 ORDERLY_GUARDIAN: {
                     title: "질서의 수호자 🛡️",
-                    description: "당신은 안정과 조화를 최우선으로 생각하는 책임감 강한 마인드입니다. 사회의 규칙과 질서를 중요하게 여기며, 혼란스러운 상황에서도 평정심을 잃지 않고 체계적인 해결책을 모색합니다. 공동체의 안녕을 위해 헌신하며, 모든 것이 제자리에 있을 때 편안함을 느낍니다.",
-                    shortSummary: "세상의 질서를 수호하는 당신은, 마치 움직이는 도서관이자 꼼꼼한 플래너! 📚 모든 것을 제자리에 두고, 예측 가능한 삶에서 안정감을 느낍니다. 당신의 존재 자체가 평화입니다.",
-                    humorousInsight: "당신은 약속 시간에 늦는 법이 없죠? 심지어 '미리 가서 기다리는' 유형! 계획에 없던 서프라이즈는 당신을 혼란스럽게 하지만, 당신의 질서는 모두에게 안도감을 줍니다. 가끔은 '무계획'도 계획의 일부라고 생각해보는 건 어때요?",
-                    callToAction: "안정과 조화의 아이콘! 당신의 질서정연한 마인드를 공유하고, 친구들의 혼란스러운 세상을 구원해주세요!",
+                    description: "당신은 안정과 조화를 무엇보다 중요하게 생각하는, 책임감 강한 수호자입니다. 사회의 규칙과 확립된 질서를 존중하며, 혼란스러운 상황에서도 평정심을 잃지 않고 체계적인 해결책을 모색합니다. 당신은 공동체의 안녕과 발전을 위해 헌신하며, 모든 것이 제자리에 있을 때 가장 큰 안정감을 느낍니다.",
+                    shortSummary: "세상의 질서와 안정을 수호하는 당신은, 살아있는 규범이자 꼼꼼한 관리자입니다. 📚 모든 것을 예측 가능한 범위 안에 두고, 계획된 삶에서 안정감을 느낍니다. 당신의 존재는 그 자체로 공동체의 든든한 버팀목입니다.",
+                    humorousInsight: "혹시 약속 시간에 1분이라도 늦으면 큰일 나는 줄 아는 타입인가요? '미리 가서 기다리기'는 당신의 오랜 습관! 계획에 없던 서프라이즈는 당신을 잠시 당황하게 하지만, 당신의 질서는 모두에게 깊은 신뢰감을 줍니다.",
+                    callToAction: "안정과 조화의 아이콘! 당신의 질서정연한 마인드를 공유하고, 혼란에 빠진 친구들의 세상을 구원해주세요!",
                     icon: "🛡️",
                     className: "result-order",
-                    highScoreSnippet: "당신의 가장 큰 강점은 안정과 조화를 추구하는 책임감입니다. 모든 상황을 체계적으로 관리하고 질서를 유지하며, 공동체의 안녕을 위해 헌신하는 믿음직스러운 모습이 돋보입니다.",
-                    lowScoreSnippet: "지나치게 계획에 얽매이거나 예측 불가능한 상황에 당황할 수 있습니다. 가끔은 즉흥적인 변화를 받아들이고, 예상치 못한 곳에서 새로운 즐거움을 찾아보는 유연함을 길러보는 것은 어떨까요?"
+                    highScoreSnippet: "당신의 가장 큰 강점은 공동체의 안정과 조화를 추구하는 깊은 책임감입니다. 모든 상황을 체계적으로 관리하고, 예측 가능한 계획을 통해 리스크를 최소화하는 당신의 능력은 어떤 조직에서든 빛을 발합니다.",
+                    lowScoreSnippet: "지나치게 계획에 얽매이거나 예측 불가능한 변화에 대한 저항이 클 수 있습니다. 가끔은 즉흥적인 결정을 시도하고, 예상치 못한 상황이 주는 새로운 즐거움을 발견해 보세요. 유연성은 당신을 더 높은 차원으로 이끌 것입니다."
                 },
                 EMPATHETIC_SOUL: {
                     title: "공감적 중재자 ❤️",
-                    description: "당신은 타인의 감정을 깊이 이해하고 공감하는 능력이 뛰어난 따뜻한 마인드입니다. 이성적인 판단보다는 사람 사이의 관계와 감정적인 조화를 중요하게 생각하며, 갈등을 중재하고 모두가 행복할 수 있는 길을 모색합니다. 당신의 존재 자체가 주변 사람들에게 위안과 힘이 됩니다.",
-                    shortSummary: "타인의 마음을 읽는 능력자! 💖 당신의 공감 능력은 마치 마법과 같아서, 주변 사람들에게 따뜻한 위로와 힘을 줍니다. 당신이 있는 곳엔 언제나 평화가 찾아옵니다.",
-                    humorousInsight: "누군가 힘들어하면 당신의 지갑은 자동으로 열리고, 친구의 고민은 밤새도록 들어주는 당신! 😂 가끔은 나 자신을 먼저 챙기는 것도 중요해요. 타인의 감정 쓰레기통이 되지는 마시길!",
-                    callToAction: "세상에 따뜻한 위로가 필요한가요? 당신의 공감 가득한 마인드를 공유하고, 지친 이들에게 힘을 불어넣어 주세요!",
+                    description: "당신은 타인의 감정을 자신의 것처럼 깊이 이해하고 공감하는 능력이 뛰어난, 따뜻한 마음의 소유자입니다. 논리적인 판단보다는 사람 사이의 관계와 감정적인 조화를 우선시하며, 갈등 상황에서 양측의 입장을 모두 고려하여 모두가 행복할 수 있는 상생의 길을 모색합니다. 당신의 존재는 주변 사람들에게 큰 위안과 힘이 됩니다.",
+                    shortSummary: "타인의 마음을 비추는 거울! 💖 당신의 깊은 공감 능력은 주변 사람들에게 따뜻한 위로와 강력한 지지를 제공합니다. 당신이 있는 곳에는 언제나 이해와 화합의 에너지가 넘칩니다.",
+                    humorousInsight: "친구가 슬퍼하면 같이 울어주고, 기뻐하면 같이 웃어주는 당신! 혹시 타인의 감정에 너무 깊이 빠져들어 정작 자신의 에너지는 방전되고 있지 않나요? 가끔은 자신을 먼저 챙기는 이기심도 필요하답니다.",
+                    callToAction: "세상에 따뜻한 위로와 이해가 필요한가요? 당신의 공감 가득한 마인드를 공유하고, 삭막한 세상에 따스한 온기를 불어넣어 주세요!",
                     icon: "❤️",
                     className: "result-emotion",
-                    highScoreSnippet: "타인의 감정을 깊이 이해하고 공감하는 능력은 당신의 독보적인 강점입니다. 사람과 사람 사이의 관계를 중시하고, 갈등을 원만하게 해결하며, 주변 사람들에게 따뜻한 위로와 힘을 주는 존재입니다.",
-                    lowScoreSnippet: "다른 사람의 감정에 너무 깊이 몰입하거나, 개인적인 감정을 객관화하기 어려워할 수 있습니다. 가끔은 자신을 먼저 챙기고, 이성적인 판단과 거리를 두는 연습을 통해 스스로를 보호하는 지혜가 필요합니다."
+                    highScoreSnippet: "타인의 감정을 깊이 이해하고 공감하는 능력은 당신의 가장 특별한 재능입니다. 이를 통해 사람들과 강한 유대감을 형성하고, 갈등을 평화롭게 해결하며, 주변 사람들에게 긍정적인 영향을 미치는 리더가 될 수 있습니다.",
+                    lowScoreSnippet: "다른 사람의 감정에 지나치게 몰입하여 객관적인 판단을 내리기 어려워하거나, 정서적으로 쉽게 지칠 수 있습니다. 때로는 한 걸음 물러나 이성적인 분석을 통해 상황을 조망하고, 자신의 감정을 보호하는 연습이 필요합니다."
                 }
             },
             questions: [] // Questions will be loaded dynamically
@@ -503,48 +503,48 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             results: {
                 LOGIC_MASTER: {
-                    title: "Logic Master 🧠",
-                    description: "You are a cool-headed analyst who makes decisions based solely on data and clear facts, unswayed by emotions or uncertainty. You excel at objectively grasping all situations and finding the most efficient and rational solutions.",
-                    shortSummary: "Armed with data and logic, emotions can take a backseat! Numbers are your language, and facts are the only truth. You're like a living calculator, unraveling complex problems with brilliant clarity.",
-                    humorousInsight: "For you, 'gut feeling' is just a 'hypothesis' yet to be proven by data! 😂 Efficiency is key in love and friendship. Ever tried listening to your heart, not just your head?",
-                    callToAction: "Unleash your extraordinary logic on the world! Share your results and analyze your friends' mind types too!",
+                    title: "The Logician 🧠",
+                    description: "You are a cool-headed analyst who makes decisions based on data and clear facts, unswayed by emotions. You excel at seeing through complexity to find the most efficient and rational solutions. Your judgments are founded on objective metrics and proven theories rather than subjective feelings.",
+                    shortSummary: "You interpret the world through data and logic! For you, numbers are a language and verified facts are the only truth. Unraveling complex problems with brilliant clarity, you operate like a finely-tuned analytical engine.",
+                    humorousInsight: "To you, a 'gut feeling' is just a 'statistical probability' that hasn't been quantified yet! 😂 You tend to analyze abstract values like love and friendship through a lens of efficiency. How about putting the calculator down and listening to your heart for a change?",
+                    callToAction: "Prove your extraordinary logic and insight to the world! Share these results with your friends and analyze their hidden mind types too!",
                     icon: "🧠",
                     className: "result-logic",
-                    highScoreSnippet: "Your greatest strength is your outstanding logic. You excel at clearly analyzing complex problems and finding rational solutions. Your decisions, based on data and facts, are always reliable.",
-                    lowScoreSnippet: "Sometimes, situations require more than just cold logic. Try engaging in emotional exchanges or creative approaches, and pay attention to others' emotional responses. This will help broaden your perspective."
+                    highScoreSnippet: "Your most prominent strength is your outstanding logic and analytical thinking. You excel at objectively analyzing any problem without emotional disturbance, leading to highly reliable, data-driven solutions.",
+                    lowScoreSnippet: "Sometimes, you may encounter human-centric problems that cold logic alone cannot solve. Try to empathize with others' emotional reactions and consider creative, less-structured approaches. This will help enhance your decision-making model to a new level."
                 },
                 CHAOTIC_AGENT: {
-                    title: "Chaotic Agent 🌪️",
-                    description: "You are a mind full of unpredictable energy and creativity. You dislike being bound by fixed rules or frameworks, exploring new possibilities spontaneously and freely. Your actions sometimes cause chaos, but innovative ideas often emerge from them.",
-                    shortSummary: "Rules? What are those? 😋 You're a unpredictable, vibrant idea factory! Breaking free from norms, you forge new paths as a true innovator.",
-                    humorousInsight: "Your bag is like a universe, you never know what'll pop out! 😂 For you, plans are best made spontaneously. You often find life's answers in unexpected places.",
-                    callToAction: "The world awaits your beautiful chaos! Share your unique mind type and shock your friends with a dose of fresh perspective!",
+                    title: "The Chaotic Agent 🌪️",
+                    description: "You are a free spirit, full of unpredictable energy and boundless creativity. You feel constrained by established rules and frameworks, preferring to explore new possibilities through spontaneous and flexible thinking. While your actions may sometimes seem to create chaos, it is from this very chaos that groundbreaking ideas, which transcend the existing order, are born.",
+                    shortSummary: "Rules? Who made them anyway? 😋 You are a living powerhouse of ideas, full of unpredictable charm. By rejecting the beaten path to forge your own, you embody the true spirit of an innovator.",
+                    humorousInsight: "Your mind is like a Big Bang universe of ideas; no one can predict what will explode next! Your motto is 'plans are best made spontaneously,' which certainly keeps life interesting.",
+                    callToAction: "The world needs your creative chaos! Share your unique mind type and give your friends a fresh dose of inspiration and shock!",
                     icon: "🌪️",
                     className: "result-chaos",
-                    highScoreSnippet: "You are full of unpredictable energy and creativity. Your strength lies in not being confined by rigid frameworks, constantly exploring new ideas, and not being afraid of change—a truly innovative spirit.",
-                    lowScoreSnippet: "Occasionally, your free-spirited energy might cause confusion or lead you to overlook important details. How about practicing setting plans and finding stability in an orderly environment?"
+                    highScoreSnippet: "Your greatest potential lies in your creativity, which is not bound by rigid frameworks, and your innovative attitude that does not fear change. Your ability to spot new opportunities and boldly challenge them inspires those around you.",
+                    lowScoreSnippet: "Your free-flowing energy can sometimes cause you to overlook important details or struggle in situations requiring a systematic approach. To achieve your goals, it's sometimes wise to make a plan and leverage the value of order."
                 },
                 ORDERLY_GUARDIAN: {
-                    title: "Orderly Guardian 🛡️",
-                    description: "You are a responsible mind that prioritizes stability and harmony. You value societal rules and order, seeking systematic solutions even in chaotic situations without losing composure. You dedicate yourself to the well-being of the community and feel at peace when everything is in its proper place.",
-                    shortSummary: "A guardian of order, you're a walking library and a meticulous planner! 📚 You find comfort in everything being in its place and a predictable life. Your very presence brings peace.",
-                    humorousInsight: "You're never late, are you? In fact, you're the 'early bird' type! Unexpected surprises throw you off, but your order brings relief to all. Perhaps 'no plan' can also be a plan?",
-                    callToAction: "Icon of stability and harmony! Share your orderly mind and bring salvation to your friends' chaotic worlds!",
+                    title: "The Orderly Guardian 🛡️",
+                    description: "You are a responsible guardian who values stability and harmony above all. You respect societal rules and established order, seeking systematic solutions in chaotic situations without losing composure. You are dedicated to the well-being and progress of your community, feeling most at ease when everything is in its proper place.",
+                    shortSummary: "As a protector of the world's order and stability, you are a living code of conduct and a meticulous manager. 📚 You find comfort in a predictable life where everything is planned. Your presence is a strong pillar for any community.",
+                    humorousInsight: "Are you the type who panics if you're even one minute late? 'Arriving early and waiting' is your signature move! Unexpected surprises might fluster you, but your reliability brings a deep sense of trust to everyone.",
+                    callToAction: "An icon of stability and harmony! Share your orderly mind and bring salvation to your friends' chaotic worlds!",
                     icon: "🛡️",
                     className: "result-order",
-                    highScoreSnippet: "Your greatest strength is your responsibility, pursuing stability and harmony. You systematically manage all situations, maintain order, and dedicate yourself to the well-being of the community, making you a trustworthy presence.",
-                    lowScoreSnippet: "You might be overly bound by plans or flustered by unpredictable situations. How about practicing flexibility, embracing spontaneous changes, and finding new joys in unexpected places?"
+                    highScoreSnippet: "Your greatest strength is a deep sense of responsibility that pursues stability and harmony for your community. Your ability to manage situations systematically and minimize risks through predictable planning shines in any organization.",
+                    lowScoreSnippet: "You may be overly attached to plans or resistant to unpredictable changes. Try making a spontaneous decision once in a while and discover the new joys that unexpected situations can bring. Flexibility will lead you to a higher level of excellence."
                 },
                 EMPATHETIC_SOUL: {
-                    title: "Empathetic Soul ❤️",
-                    description: "You are a warm mind with an exceptional ability to deeply understand and empathize with others' feelings. You prioritize human relationships and emotional harmony over rational judgment, mediating conflicts and seeking paths where everyone can be happy. Your very presence brings comfort and strength to those around you.",
-                    shortSummary: "A master of reading hearts! 💖 Your empathy is like magic, offering warm comfort and strength to those around you. Peace always finds its way where you are.",
-                    humorousInsight: "When someone's struggling, your wallet opens automatically, and you'll listen to a friend's worries all night! 😂 Remember to take care of yourself first. Don't be a human emotional dumpster!",
-                    callToAction: "Is the world in need of warm solace? Share your empathetic mind and empower those who are weary!",
+                    title: "The Empathetic Soul ❤️",
+                    description: "You are a warm-hearted individual with an exceptional ability to deeply understand and empathize with the feelings of others as if they were your own. You prioritize relationships and emotional harmony over logical judgments, and in conflict, you seek a win-win path that considers both sides. Your presence is a great comfort and source of strength for those around you.",
+                    shortSummary: "A mirror that reflects the hearts of others! 💖 Your deep empathy provides warm comfort and powerful support to those around you. Wherever you are, there is an energy of understanding and harmony.",
+                    humorousInsight: "You cry when your friends are sad and laugh when they are happy! But are you getting so absorbed in others' emotions that your own energy is draining? Remember, sometimes it's necessary to be a little selfish and take care of yourself first.",
+                    callToAction: "Does the world need more comfort and understanding? Share your empathetic mind and bring a warm glow to this chilly world!",
                     icon: "❤️",
                     className: "result-emotion",
-                    highScoreSnippet: "Your unique strength lies in your deep understanding and empathy for others' emotions. You value human relationships, resolve conflicts smoothly, and bring warm comfort and strength to those around you.",
-                    lowScoreSnippet: "You might sometimes get too deeply immersed in others' emotions or find it difficult to objectify personal feelings. It's important to take care of yourself first, and practice wisdom to protect yourself by sometimes maintaining an objective perspective and distance from emotions."
+                    highScoreSnippet: "Your most special talent is your ability to deeply understand and empathize with others' emotions. This allows you to form strong bonds, peacefully resolve conflicts, and become a leader who positively influences those around you.",
+                    lowScoreSnippet: "You may find it difficult to make objective judgments or become emotionally exhausted by being too immersed in others' feelings. It is sometimes necessary to take a step back, view situations through a logical lens, and practice protecting your own emotions."
                 }
             },
             questions: [] // Questions will be loaded dynamically
